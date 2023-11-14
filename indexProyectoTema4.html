@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<!--
+        Descripción: 214DWESProyectoTema3
+        Autor: Carlos García Cachón
+        Fecha de creación/modificación: 13/10/2023
+-->
+<html lang="es">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="author" content="Carlos García Cachón">
+        <meta name="description" content="214DWESProyectoTema3">
+        <meta name="keywords" content="214DWESProyectoTema3, DWES">
+        <meta name="generator" content="Apache NetBeans IDE 19">
+        <meta name="generator" content="60">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <title>Carlos García Cachón</title>
+        <link rel="icon" type="image/jpg" href="webroot/media/images/favicon.ico"/>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+              integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+        <link rel="stylesheet" href="webroot/css/style.css">
+    </head>
+
+    <body>
+        <header class="text-center">
+            <h1>TEMA 4: TECNICAS DE ACCESO A DATOS EN PHP</h1>
+        </header>
+        <main>
+            <div class="container mt-3">
+                <div class="row">
+                    <div class="col">
+                        <div class="list-group text-center">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Scripts - SQL</th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th>Código</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Script creación de base de datos y usuario:</td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td><a href="mostrarCodigo/muestraScriptDBCrea.html"><img src="webroot/media/images/icon-eye.png" alt="Icon-Eye"/></a></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Script carga inicial de base de datos:</td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td><a href="mostrarCodigo/muestraScriptDBCargaInicial.html"><img src="webroot/media/images/icon-eye.png" alt="Icon-Eye"/></a></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Script borrado de base de datos y usuario:</td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td><a href="mostrarCodigo/muestraScriptDBBorra.html"><img src="webroot/media/images/icon-eye.png" alt="Icon-Eye"/></a></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="list-group text-center">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Ejercicios</th>
+                                        <th>Ejecución PDO</th>
+                                        <th>Código PDO</th>
+                                        <th>Ejecutar MySQLi</th>
+                                        <th>Código MySQLi</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td class="text-start">1. Conexión a la base de datos con la cuenta usuario y tratamiento de errores:</td>
+                                        <td><a href="codigoPHP/ejercicio1PDO.php"><img src="webroot/media/images/icon-play.png" alt="Icon-Play"/></a></td>
+                                        <td><a href="mostrarCodigo/muestraEjercicio1PDO.php"><img src="webroot/media/images/icon-eye.png" alt="Icon-Eye"/></a></td>
+                                        <td><a href="codigoPHP/ejercicio1MYSQLLI.php"><img src="webroot/media/images/icon-play.png" alt="Icon-Play"/></a></td>
+                                        <td><a href="mostrarCodigo/muestraEjercicio1MYSQLLI.php"><img src="webroot/media/images/icon-eye.png" alt="Icon-Eye"/></a></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="text-start">2. Mostrar el contenido de la tabla Departamento y el número de registros:</td>
+                                        <td><a href="codigoPHP/ejercicio2PDO.php"><img src="webroot/media/images/icon-play.png" alt="Icon-Play"/></a></td>
+                                        <td><a href="mostrarCodigo/muestraEjercicio2PDO.php"><img src="webroot/media/images/icon-eye.png" alt="Icon-Eye"/></a></td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="text-start">3. Formulario para añadir un departamento a la tabla Departamento con validación de entrada y control de errores:</td>
+                                        <td><a href="codigoPHP/ejercicio3PDO.php"><img src="webroot/media/images/icon-play.png" alt="Icon-Play"/></a></td>
+                                        <td><a href="mostrarCodigo/muestraEjercicio3PDO.php"><img src="webroot/media/images/icon-eye.png" alt="Icon-Eye"/></a></td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="text-start">4. Formulario de búsqueda de departamentos por descripción (por una parte del campo DescDepartamento, si el usuario no pone nada deben aparecer todos los departamentos):</td>
+                                        <td><a href="codigoPHP/ejercicio4PDO.php"><img src="webroot/media/images/icon-play.png" alt="Icon-Play"/></a></td>
+                                        <td><a href="mostrarCodigo/muestraEjercicio4PDO.php"><img src="webroot/media/images/icon-eye.png" alt="Icon-Eye"/></a></td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="text-start">5. Pagina web que añade tres registros a nuestra tabla Departamento utilizando tres instrucciones insert y una transacción, de tal forma que se añadan los tres registros o no se añada ninguno:</td>
+                                        <td><a href="codigoPHP/ejercicio5PDO.php"><img src="webroot/media/images/icon-play.png" alt="Icon-Play"/></a></td>
+                                        <td><a href="mostrarCodigo/muestraEjercicio5PDO.php"><img src="webroot/media/images/icon-eye.png" alt="Icon-Eye"/></a></td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="text-start">6. Pagina web que cargue registros en la tabla Departamento desde un array departamentosnuevos utilizando una consulta preparada:</td>
+                                        <td><a href="codigoPHP/ejercicio6PDO.php"><img src="webroot/media/images/icon-play.png" alt="Icon-Play"/></a></td>
+                                        <td><a href="mostrarCodigo/muestraEjercicio6PDO.php"><img src="webroot/media/images/icon-eye.png" alt="Icon-Eye"/></a></td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="text-start">7. Página web que toma datos (código y descripción) de un fichero xml y los añade a la tabla Departamento de nuestra base de datos. (IMPORTAR). El fichero importado se encuentra en el
+                                            directorio .../tmp/ del servidor:
+                                        </td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="text-start">8. Página web que toma datos (código y descripción) de la tabla Departamento y guarda en un
+                                            fichero departamento.xml. (COPIA DE SEGURIDAD / EXPORTAR). El fichero exportado se
+                                            encuentra en el directorio .../tmp/ del servidor.
+                                            Si el alumno dispone de tiempo probar distintos formatos de importación - exportación: XML,
+                                            JSON, CSV, TXT,...
+                                            Si el alumno dispone de tiempo probar a exportar e importar a o desde un directorio (a elegir) en
+                                            el equipo cliente:
+                                        </td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+        <footer class="position-fixed bottom-0 end-0">
+            <div class="row text-center">
+                <div class="footer-item">
+                    <address>© <a href="../index.html" style="color: white; text-decoration: none;">Carlos García Cachón</a>
+                        IES LOS SAUCES 2023-24 </address>
+                </div>
+                <div class="footer-item">
+                    <a href="indexProyectoTema4.html" style="color: white; text-decoration: none;"> Inicio</a>
+                </div>
+                <div class="footer-item">
+                    <a href="https://github.com/Fighter-kun?tab=repositories" target="_blank"><img
+                            src="webroot/media/images/github.png" alt="LogoGitHub" /></a>
+                </div>
+            </div>
+        </footer>
+
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+                integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+        crossorigin="anonymous"></script>
+    </body>
+
+</html>
