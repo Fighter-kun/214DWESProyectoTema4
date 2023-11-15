@@ -31,11 +31,11 @@
                 width: 450px;
             }
             .errorException {
-                color:#FF0000; 
+                color:#FF0000;
                 font-weight:bold;
             }
             .respuestaCorrecta {
-                color:#4CAF50; 
+                color:#4CAF50;
                 font-weight:bold;
             }
         </style>
@@ -52,8 +52,8 @@
                         <?php
                         /**
                          * @author Carlos García Cachón
-                         * @version 1.0
-                         * @since 08/11/2023
+                         * @version 1.1
+                         * @since 15/11/2023
                          */
                         // Incluyo la libreria de validación para comprobar los campos
                         require_once '../core/231018libreriaValidacion.php';
@@ -66,14 +66,12 @@
                             $miDB = new PDO(DNS, USERNAME, PASSWORD);
                             $miDB->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION); // Configuramos las excepciones
                             echo ("<div class='respuestaCorrecta'>CONEXIÓN EXITOSA POR PDO</div><br><br>"); // Mensaje si la conexión es exitosa
-
                             // CONSULTAS Y TRANSACCION
                             $miDB->beginTransaction(); // Deshabilitamos el modo autocommit
-
                             // Consultas SQL de inserción 
-                            $consultaInsercion1 = "INSERT INTO Departamento(CodDepartamento,DescDepartamento,VolumenNegocio) VALUES ('AAD', 'Departamento de Cobro', 300)";
-                            $consultaInsercion2 = "INSERT INTO Departamento(CodDepartamento,DescDepartamento,VolumenNegocio) VALUES ('AAE', 'Departamento de I+D', 10000)";
-                            $consultaInsercion3 = "INSERT INTO Departamento(CodDepartamento,DescDepartamento,VolumenNegocio) VALUES ('AAF', 'Departamento de Inmuebles', 30)";
+                            $consultaInsercion1 = "INSERT INTO T02_Departamento(T02_CodDepartamento, T02_DescDepartamento, T02_FechaCreacionDepartamento, T02_VolumenDeNegocio, T02_FechaBajaDepartamento) VALUES ('AAD', 'Departamento de Cobro', now(), 300, NULL)";
+                            $consultaInsercion2 = "INSERT INTO T02_Departamento(T02_CodDepartamento, T02_DescDepartamento, T02_FechaCreacionDepartamento, T02_VolumenDeNegocio, T02_FechaBajaDepartamento) VALUES ('AAE', 'Departamento de I+D', now(), 10000, NULL)";
+                            $consultaInsercion3 = "INSERT INTO T02_Departamento(T02_CodDepartamento, T02_DescDepartamento, T02_FechaCreacionDepartamento, T02_VolumenDeNegocio, T02_FechaBajaDepartamento) VALUES ('AAF', 'Departamento de Inmuebles', now(), 30, NULL)";
 
                             // Preparamos las consultas
                             $resultadoconsultaInsercion1 = $miDB->prepare($consultaInsercion1);
@@ -87,33 +85,35 @@
                                 echo ("<div class='respuestaCorrecta'>Los datos se han insertado correctamente en la tabla Departamento.</div>");
 
                                 // Preparamos y ejecutamos la consulta SQL
-                                $consulta = "SELECT * FROM Departamento";
+                                $consulta = "SELECT * FROM T02_Departamento";
                                 $resultadoConsultaPreparada = $miDB->prepare($consulta);
                                 $resultadoConsultaPreparada->execute();
 
                                 // Creamos una tabla en la que mostraremos la tabla de la BD
                                 echo ("<div class='list-group text-center'>");
                                 echo ("<table>
-                                        <thead>
-                                        <tr>
-                                            <th>CodDepartamento</th>
-                                            <th>DescDepartamento</th>
-                                            <th>FechaBaja</th>
-                                            <th>VolumenNegocio</th>
-                                        </tr>
-                                        </thead>");
+                            <thead>
+                            <tr>
+                                <th>Codigo de Departamento</th>
+                                <th>Descripcion de Departamento</th>
+                                <th>Fecha de Creacion</th>
+                                <th>Volumen de Negocio</th>
+                                <th>Fecha de Baja</th>
+                            </tr>
+                            </thead>");
 
                                 /* Aqui recorremos todos los valores de la tabla, columna por columna, usando el parametro 'PDO::FETCH_ASSOC' , 
                                  * el cual nos indica que los resultados deben ser devueltos como un array asociativo, donde los nombres de las columnas de 
                                  * la tabla se utilizan como claves (keys) en el array.
                                  */
                                 echo ("<tbody>");
-                                while ($oDepartartamento = $resultadoConsultaPreparada->fetchObject()) {
+                                while ($oDepartamento = $resultadoConsultaPreparada->fetchObject()) {
                                     echo ("<tr>");
-                                    echo ("<td>" . $oDepartartamento->CodDepartamento . "</td>");
-                                    echo ("<td>" . $oDepartartamento->DescDepartamento . "</td>");
-                                    echo ("<td>" . $oDepartartamento->FechaBaja . "</td>");
-                                    echo ("<td>" . $oDepartartamento->VolumenNegocio . "</td>");
+                                    echo ("<td>" . $oDepartamento->T02_CodDepartamento . "</td>");
+                                    echo ("<td>" . $oDepartamento->T02_DescDepartamento . "</td>");
+                                    echo ("<td>" . $oDepartamento->T02_FechaCreacionDepartamento . "</td>");
+                                    echo ("<td>" . $oDepartamento->T02_VolumenDeNegocio . "</td>");
+                                    echo ("<td>" . $oDepartamento->T02_FechaBajaDepartamento . "</td>");
                                     echo ("</tr>");
                                 }
 
@@ -123,10 +123,10 @@
                                  */
                                 $numeroDeRegistrosConsultaPreparada = $resultadoConsultaPreparada->rowCount();
                                 // Y mostramos el número de registros
-                                echo ("<tfoot ><tr style='background-color: #666; color:white;'><td colspan='4'>Número de registros en la tabla Departamento: " . $numeroDeRegistrosConsultaPreparada . '</td></tr></tfoot>');
+                                echo ("<tfoot ><tr style='background-color: #666; color:white;'><td colspan='5'>Número de registros en la tabla Departamento: " . $numeroDeRegistrosConsultaPreparada . '</td></tr></tfoot>');
                                 echo ("</table>");
                                 echo ("</div>");
-                            } 
+                            }
                         } catch (PDOException $miExcepcionPDO) {
                             $miDB->rollback(); //  Revierte o deshace los cambios
                             $errorExcepcion = $miExcepcionPDO->getCode(); // Almacenamos el código del error de la excepción en la variable '$errorExcepcion'

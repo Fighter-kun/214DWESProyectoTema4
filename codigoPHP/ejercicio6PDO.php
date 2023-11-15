@@ -52,13 +52,16 @@
                         <?php
                         /**
                          * @author Carlos García Cachón
-                         * @version 1.0
-                         * @since 08/11/2023
+                         * @version 1.1
+                         * @since 15/11/2023
                          */
                         // Incluyo la libreria de validación para comprobar los campos
                         require_once '../core/231018libreriaValidacion.php';
                         // Incluyo la configuración de conexión a la BD
                         require_once '../config/confDB.php';
+                        
+                        // Defino una constante para la fecha y hora actual
+                        define('FECHA_ACTUAL', date('Y-m-d H:i:s'));
 
                         // Declaro una variable de entrada para mostrar o no la tabla con los valores de la BD
                         $bEntradaOK = true;
@@ -74,19 +77,24 @@
                             $miDB->beginTransaction(); // Deshabilitamos el modo autocommit
 
                             // Consultas SQL de inserción 
-                            $consultaInsercion = "INSERT INTO Departamento(CodDepartamento, DescDepartamento, VolumenNegocio) VALUES (:CodDepartamento, :DescDepartamento, :VolumenNegocio)";
+                            $consultaInsercion = "INSERT T02_Departamento(T02_CodDepartamento, T02_DescDepartamento, T02_FechaCreacionDepartamento, T02_VolumenDeNegocio, T02_FechaBajaDepartamento) "
+                                    . "VALUES (:CodDepartamento, :DescDepartamento, :FechaCreacionDepartamento, :VolumenDeNegocio, :FechaBajaDepartamento)";
 
                             // Preparamos las consultas
                             $resultadoconsultaInsercion = $miDB->prepare($consultaInsercion);
                             
                             // ARRAY CON REGISTROS
-                            $aDepartamentosNuevos  = [['CodDepartamento' => 'AAG','DescDepartamento' => 'Departamento de Montaje','VolumenNegocio' => 50],
-                                                      ['CodDepartamento' => 'AAH','DescDepartamento' => 'Departamento de Desmontaje','VolumenNegocio' => 700]];
+                            $aDepartamentosNuevos  = [
+                                ['CodDepartamento' => 'AAG','DescDepartamento' => 'Departamento de Montaje', 'FechaCreacionDepartamento' => FECHA_ACTUAL, 'VolumenDeNegocio' => 50, 'FechaBajaDepartamento' => null],
+                                ['CodDepartamento' => 'AAH','DescDepartamento' => 'Departamento de Desmontaje', 'FechaCreacionDepartamento' => FECHA_ACTUAL, 'VolumenDeNegocio' => 700, 'FechaBajaDepartamento' => null]
+                                ];
                             
                             foreach($aDepartamentosNuevos as $departamento){ //Recorremos los registros que vamos a insertar en la tabla
                                 $aResgistros = [':CodDepartamento' => $departamento['CodDepartamento'], 
                                                ':DescDepartamento' => $departamento['DescDepartamento'], 
-                                               ':VolumenNegocio' => $departamento['VolumenNegocio']];
+                                               ':FechaCreacionDepartamento' => $departamento['FechaCreacionDepartamento'],
+                                               ':VolumenDeNegocio' => $departamento['VolumenDeNegocio'],
+                                               ':FechaBajaDepartamento' => $departamento['FechaBajaDepartamento']];
                                 if (!$resultadoconsultaInsercion->execute($aResgistros)) {
                                     $bEntradaOK = false;
                                     break;
@@ -100,33 +108,35 @@
                                 echo ("<div class='respuestaCorrecta'>Los datos se han insertado correctamente en la tabla Departamento.</div>");
 
                                 // Preparamos y ejecutamos la consulta SQL
-                                $consulta = "SELECT * FROM Departamento";
+                                $consulta = "SELECT * FROM T02_Departamento";
                                 $resultadoConsultaPreparada = $miDB->prepare($consulta);
                                 $resultadoConsultaPreparada->execute();
 
                                 // Creamos una tabla en la que mostraremos la tabla de la BD
                                 echo ("<div class='list-group text-center'>");
                                 echo ("<table>
-                                        <thead>
-                                        <tr>
-                                            <th>CodDepartamento</th>
-                                            <th>DescDepartamento</th>
-                                            <th>FechaBaja</th>
-                                            <th>VolumenNegocio</th>
-                                        </tr>
-                                        </thead>");
+                                    <thead>
+                                    <tr>
+                                        <th>Codigo de Departamento</th>
+                                        <th>Descripcion de Departamento</th>
+                                        <th>Fecha de Creacion</th>
+                                        <th>Volumen de Negocio</th>
+                                        <th>Fecha de Baja</th>
+                                    </tr>
+                                    </thead>");
 
                                 /* Aqui recorremos todos los valores de la tabla, columna por columna, usando el parametro 'PDO::FETCH_ASSOC' , 
                                  * el cual nos indica que los resultados deben ser devueltos como un array asociativo, donde los nombres de las columnas de 
                                  * la tabla se utilizan como claves (keys) en el array.
                                  */
                                 echo ("<tbody>");
-                                while ($oDepartartamento = $resultadoConsultaPreparada->fetchObject()) {
+                                while ($oDepartamento = $resultadoConsultaPreparada->fetchObject()) {
                                     echo ("<tr>");
-                                    echo ("<td>" . $oDepartartamento->CodDepartamento . "</td>");
-                                    echo ("<td>" . $oDepartartamento->DescDepartamento . "</td>");
-                                    echo ("<td>" . $oDepartartamento->FechaBaja . "</td>");
-                                    echo ("<td>" . $oDepartartamento->VolumenNegocio . "</td>");
+                                    echo ("<td>".$oDepartamento->T02_CodDepartamento."</td>");
+                                    echo ("<td>".$oDepartamento->T02_DescDepartamento."</td>");
+                                     echo ("<td>".$oDepartamento->T02_FechaCreacionDepartamento."</td>");
+                                      echo ("<td>".$oDepartamento->T02_VolumenDeNegocio."</td>");
+                                      echo ("<td>".$oDepartamento->T02_FechaBajaDepartamento."</td>");
                                     echo ("</tr>");
                                 }
 
@@ -136,7 +146,7 @@
                                  */
                                 $numeroDeRegistrosConsultaPreparada = $resultadoConsultaPreparada->rowCount();
                                 // Y mostramos el número de registros
-                                echo ("<tfoot ><tr style='background-color: #666; color:white;'><td colspan='4'>Número de registros en la tabla Departamento: " . $numeroDeRegistrosConsultaPreparada . '</td></tr></tfoot>');
+                                echo ("<tfoot ><tr style='background-color: #666; color:white;'><td colspan='5'>Número de registros en la tabla Departamento: ".$numeroDeRegistrosConsultaPreparada.'</td></tr></tfoot>');
                                 echo ("</table>");
                                 echo ("</div>");
                             }

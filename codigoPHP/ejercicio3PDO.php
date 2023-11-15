@@ -155,7 +155,7 @@
                                 // Cargo el array con las respuestas
                                 $aRespuestas['CodDepartamento'] = strtoupper($_REQUEST['CodDepartamento']);
                                 $aRespuestas['DescDepartamento'] = $_REQUEST['DescDepartamento'];
-                                $aRespuestas['FechaCreacionDepartamento'] = 'now()'; // Cargo la fecha actual y hora actual formateada
+                                $aRespuestas['FechaCreacionDepartamento'] = 'now()'; // Cargo la fecha actual y hora actual
                                 $aRespuestas['VolumenDeNegocio'] = $_REQUEST['VolumenDeNegocio'];
                                 $aRespuestas['FechaBajaDepartamento'] = 'NULL';
 
