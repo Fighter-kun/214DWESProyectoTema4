@@ -49,7 +49,7 @@
                     // Utilizamos el bloque 'try'
                     try {
                         // Establecemos la conexión por medio de PDO
-                        $miDB = new PDO(DNS,USERNAME,PASSWORD);
+                        $miDB = new PDO(DSN,USERNAME,PASSWORD);
                         echo ("<div class='fs-4 text'>CONEXIÓN EXITOSA POR PDO</div><br>"); // Mensaje si la conexión es exitosa
                         echo ("<div class='fs-4 text'>ATRIBUTOS PDO:</div><br>");
                         foreach ($attributesPDO as $valor) {
@@ -70,7 +70,7 @@
                     // Utilizamos el bloque 'try'
                     try {
                         // Establecemos la conexión por medio de PDO
-                        $miDB = new PDO(DNS,USERNAME,'paso1'); // Aqui ponemos mal la contraseña para buscar el mensaje de error
+                        $miDB = new PDO(DSN,USERNAME,'paso1'); // Aqui ponemos mal la contraseña para buscar el mensaje de error
                         echo ("<div class='fs-4 text'>CONEXIÓN EXITOSA POR PDO</div><br>"); // Mensaje si la conexión es exitosa
                         foreach ($attributesPDO as $valor) {
                             echo('PDO::<u>ATTR_'.$valor.'</u> => <b>'.$miDB->getAttribute(constant("PDO::ATTR_$valor"))."</b><br>");

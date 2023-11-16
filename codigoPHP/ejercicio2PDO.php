@@ -40,7 +40,7 @@
                     try {
                         require_once '../config/confDB.php';
                         // Establecemos la conexión por medio de PDO
-                        $miDB = new PDO(DNS,USERNAME,PASSWORD);
+                        $miDB = new PDO(DSN,USERNAME,PASSWORD);
                         echo ("CONEXIÓN EXITOSA POR PDO<br><br>"); // Mensaje si la conexión es exitosa
                         
                         // Preparamos y ejecutamos la consulta SQL

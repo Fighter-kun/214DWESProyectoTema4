@@ -99,7 +99,7 @@
                                 try {
                                     // CONEXION BASE DE DATOS
                                     // Iniciamos la conexión con la BD
-                                    $miDB = new PDO(DNS, USERNAME, PASSWORD);
+                                    $miDB = new PDO(DSN, USERNAME, PASSWORD);
                                     $miDB->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION); // Configuramos las excepciones
                                     // CONSULTA
                                     // En esta línea utilizo 'quote()' se utiliza para escapar y citar el valor del $_REQUEST['CodDepartamento'], ayudando a prevenir la inyección de SQL.

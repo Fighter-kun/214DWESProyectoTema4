@@ -111,7 +111,7 @@
                                   host – nombre o dirección IP del servidor
                                   dbname – nombre de la base de datos
                                  */
-                                $miDB = new PDO(DNS, USERNAME, PASSWORD);
+                                $miDB = new PDO(DSN, USERNAME, PASSWORD);
 
                                 //Preparamos la consulta
                                 $resultadoConsulta = $miDB->query("select * from T02_Departamento where T02_DescDepartamento like'%$aRespuestas[DescDepartamento]%';");

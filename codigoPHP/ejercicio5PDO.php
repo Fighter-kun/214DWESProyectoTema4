@@ -63,7 +63,7 @@
                         try {
                             // CONEXION CON LA BD
                             // Establecemos la conexión por medio de PDO
-                            $miDB = new PDO(DNS, USERNAME, PASSWORD);
+                            $miDB = new PDO(DSN, USERNAME, PASSWORD);
                             $miDB->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION); // Configuramos las excepciones
                             echo ("<div class='respuestaCorrecta'>CONEXIÓN EXITOSA POR PDO</div><br><br>"); // Mensaje si la conexión es exitosa
                             // CONSULTAS Y TRANSACCION
