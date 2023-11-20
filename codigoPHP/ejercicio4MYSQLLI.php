@@ -1,15 +1,15 @@
 <!DOCTYPE html>
 <!--
-        Descripción: CodigoEjercicio4PDO
+        Descripción: CodigoEjercicio4MYSQLLI
         Autor: Carlos García Cachón
-        Fecha de creación/modificación: 06/11/2023
+        Fecha de creación/modificación: 20/11/2023
 -->
 <html lang="es">
     <head>
         <meta charset="UTF-8">
         <meta name="author" content="Carlos García Cachón">
-        <meta name="description" content="CodigoEjercicio4PDO">
-        <meta name="keywords" content="CodigoEjercicio, 4PDO">
+        <meta name="description" content="CodigoEjercicio4MYSQLLI">
+        <meta name="keywords" content="CodigoEjercicio, 4MYSQLLI">
         <meta name="generator" content="Apache NetBeans IDE 19">
         <meta name="generator" content="60">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -53,13 +53,13 @@
                         <?php
                         /**
                          * @author Carlos García Cachón
-                         * @version 1.1
-                         * @since 08/11/2023
+                         * @version 1.0
+                         * @since 20/11/2023
                          */
                         //Incluyo las librerias de validación para comprobar los campos
                         require_once '../core/231018libreriaValidacion.php';
                         // Incluyo la configuración de conexión a la BD
-                        require_once '../config/confDB.php';
+                        require_once '../config/confDB_MySQLLi.php';
 
                         //Declaración de constantes por OBLIGATORIEDAD
                         define('OPCIONAL', 0);
@@ -96,67 +96,7 @@
                         } else {
                             $entradaOK = false; //Si no ha pulsado el botón de enviar la validación es incorrecta.
                         }
-
-                        try {
-                                //Establecimiento de la conexion
-                                /*
-                                  Instanciamos un objeto PDO y establecemos la conexión
-                                  Construccion de la cadena PDO: (ej. 'mysql:host=localhost; dbname=midb')
-                                  host – nombre o dirección IP del servidor
-                                  dbname – nombre de la base de datos
-                                 */
-                                $miDB = new PDO(DSN, USERNAME, PASSWORD);
-
-                                //Preparamos la consulta
-                                $resultadoConsulta = $miDB->query("select * from T02_Departamento where T02_DescDepartamento like'%$aRespuestas[DescDepartamento]%';");
-                                // Ejecutando la declaración SQL
-                                if ($resultadoConsulta->rowCount() == 0) {
-                                    $aErrores['DescDepartamento'] = "No existen departamentos con esa descripcion";
-                                }
-                                // Creamos una tabla en la que mostraremos la tabla de la BD
-                                echo ("<div class='list-group text-center tablaMuestra'>");
-                                echo ("<table>
-                                        <thead>
-                                        <tr>
-                                            <th>Codigo de Departamento</th>
-                                            <th>Descripcion de Departamento</th>
-                                            <th>Fecha de Creacion</th>
-                                            <th>Volumen de Negocio</th>
-                                            <th>Fecha de Baja</th>
-                                        </tr>
-                                        </thead>");
-
-                                /* Aqui recorremos todos los valores de la tabla, columna por columna, usando el parametro 'PDO::FETCH_ASSOC' , 
-                                 * el cual nos indica que los resultados deben ser devueltos como un array asociativo, donde los nombres de las columnas de 
-                                 * la tabla se utilizan como claves (keys) en el array.
-                                 */
-                                echo ("<tbody>");
-                                while ($oDepartamento = $resultadoConsulta->fetchObject()) {
-                                    echo ("<tr>");
-                                    echo ("<td>" . $oDepartamento->T02_CodDepartamento . "</td>");
-                                    echo ("<td>" . $oDepartamento->T02_DescDepartamento . "</td>");
-                                    echo ("<td>" . $oDepartamento->T02_FechaCreacionDepartamento . "</td>");
-                                    echo ("<td>" . $oDepartamento->T02_VolumenDeNegocio . "</td>");
-                                    echo ("<td>" . $oDepartamento->T02_FechaBajaDepartamento . "</td>");
-                                    echo ("</tr>");
-                                }
-
-                                echo ("</tbody>");
-                                /* Ahora usamos la función 'rowCount()' que nos devuelve el número de filas afectadas por la consulta y 
-                                 * almacenamos el valor en la variable '$numeroDeRegistros'
-                                 */
-                                $numeroDeRegistrosConsulta = $resultadoConsulta->rowCount();
-                                // Y mostramos el número de registros
-                                echo ("<tfoot ><tr style='background-color: #666; color:white;'><td colspan='5'>Número de registros en la tabla Departamento: " . $numeroDeRegistrosConsulta . '</td></tr></tfoot>');
-                                echo ("</table>");
-                                echo ("</div>");
-                                //Mediante PDOExprecion controlamos los errores
-                            } catch (PDOException $excepcion) {
-                                echo 'Error: ' . $excepcion->getMessage() . "<br>"; //Obtiene el valor de un atributo
-                                echo 'Código de error: ' . $excepcion->getCode() . "<br>"; // Establece el valor de un atributo
-                            } finally {
-                                unset($miDB);
-                            }
+                        
                         //Si la entrada es Ok almacenamos el valor de la respuesta del usuario en el array $aRespuestas
                         if ($entradaOK) {
                             //Almacenamos el valor en el array
@@ -164,22 +104,18 @@
                                 'DescDepartamento' => $_REQUEST['DescDepartamento'],
                             ];
 
-                            try {
-                                //Establecimiento de la conexion
-                                /*
-                                  Instanciamos un objeto PDO y establecemos la conexión
-                                  Construccion de la cadena PDO: (ej. 'mysql:host=localhost; dbname=midb')
-                                  host – nombre o dirección IP del servidor
-                                  dbname – nombre de la base de datos
-                                 */
-                                $miDB = new PDO(DSN, USERNAME, PASSWORD);
+                            // Establecimiento de la conexión
+                            $mysqli = new mysqli(DSN, USERNAME, PASSWORD, DBNAME);
 
-                                //Preparamos la consulta
-                                $resultadoConsulta = $miDB->query("select * from T02_Departamento where T02_DescDepartamento like'%$aRespuestas[DescDepartamento]%';");
+                            // Preparamos la consulta
+                            $resultadoConsulta = $mysqli->query("SELECT * FROM T02_Departamento WHERE T02_DescDepartamento LIKE '%" . $aRespuestas['DescDepartamento'] . "%';");
+
+                            try {
                                 // Ejecutando la declaración SQL
-                                if ($resultadoConsulta->rowCount() == 0) {
-                                    $aErrores['DescDepartamento'] = "No existen departamentos con esa descripcion";
+                                if ($resultadoConsulta !== false && $resultadoConsulta->num_rows == 0) {
+                                    $aErrores['DescDepartamento'] = "No existen departamentos con esa descripción";
                                 }
+
                                 // Creamos una tabla en la que mostraremos la tabla de la BD
                                 echo ("<div class='list-group text-center tablaMuestra'>");
                                 echo ("<table>
@@ -193,12 +129,11 @@
                                         </tr>
                                         </thead>");
 
-                                /* Aqui recorremos todos los valores de la tabla, columna por columna, usando el parametro 'PDO::FETCH_ASSOC' , 
-                                 * el cual nos indica que los resultados deben ser devueltos como un array asociativo, donde los nombres de las columnas de 
-                                 * la tabla se utilizan como claves (keys) en el array.
+                                /* Aquí recorremos todos los valores de la tabla, columna por columna, usando el método 'fetch_object' de MySQLi, 
+                                 * el cual nos devuelve un objeto con los nombres de las columnas como propiedades.
                                  */
                                 echo ("<tbody>");
-                                while ($oDepartamento = $resultadoConsulta->fetchObject()) {
+                                while ($oDepartamento = $resultadoConsulta->fetch_object()) {
                                     echo ("<tr>");
                                     echo ("<td>" . $oDepartamento->T02_CodDepartamento . "</td>");
                                     echo ("<td>" . $oDepartamento->T02_DescDepartamento . "</td>");
@@ -209,20 +144,22 @@
                                 }
 
                                 echo ("</tbody>");
-                                /* Ahora usamos la función 'rowCount()' que nos devuelve el número de filas afectadas por la consulta y 
-                                 * almacenamos el valor en la variable '$numeroDeRegistros'
+                                /* Ahora usamos la función 'num_rows' que nos devuelve el número de filas afectadas por la consulta y 
+                                 * almacenamos el valor en la variable '$numeroDeRegistrosConsulta'
                                  */
-                                $numeroDeRegistrosConsulta = $resultadoConsulta->rowCount();
+                                $numeroDeRegistrosConsulta = $resultadoConsulta->num_rows;
                                 // Y mostramos el número de registros
                                 echo ("<tfoot ><tr style='background-color: #666; color:white;'><td colspan='5'>Número de registros en la tabla Departamento: " . $numeroDeRegistrosConsulta . '</td></tr></tfoot>');
                                 echo ("</table>");
                                 echo ("</div>");
-                                //Mediante PDOExprecion controlamos los errores
-                            } catch (PDOException $excepcion) {
-                                echo 'Error: ' . $excepcion->getMessage() . "<br>"; //Obtiene el valor de un atributo
+                            } catch (Exception $excepcion) {
+                                echo 'Error: ' . $excepcion->getMessage() . "<br>"; // Obtiene el valor de un atributo
                                 echo 'Código de error: ' . $excepcion->getCode() . "<br>"; // Establece el valor de un atributo
                             } finally {
-                                unset($miDB);
+                                // Cerramos la conexión
+                                if ($mysqli && $mysqli->connect_errno === 0) {
+                                    $mysqli->close();
+                                }
                             }
                         } //Despues de que se ejecute el codigo anterior mostramos pase lo que pase el formulario
                         ?>

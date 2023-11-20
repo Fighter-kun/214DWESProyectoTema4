@@ -1,15 +1,15 @@
 <!DOCTYPE html>
 <!--
-        Descripción: CodigoEjercicio5PDO
+        Descripción: CodigoEjercicio5MYSQLLI
         Autor: Carlos García Cachón
-        Fecha de creación/modificación: 08/11/2023
+        Fecha de creación/modificación: 20/11/2023
 -->
 <html lang="es">
     <head>
         <meta charset="UTF-8">
         <meta name="author" content="Carlos García Cachón">
-        <meta name="description" content="CodigoEjercicio5PDO">
-        <meta name="keywords" content="CodigoEjercicio, 5PDO">
+        <meta name="description" content="CodigoEjercicio5MYSQLLI">
+        <meta name="keywords" content="CodigoEjercicio, 5MYSQLLI">
         <meta name="generator" content="Apache NetBeans IDE 19">
         <meta name="generator" content="60">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -19,21 +19,6 @@
               integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
         <link rel="stylesheet" href="../webroot/css/style.css">
         <style>
-            .obligatorio {
-                background-color: #ffff7a;
-            }
-            .bloqueado:disabled {
-                background-color: #665 ;
-                color: white;
-            }
-            .error {
-                color: red;
-                width: 450px;
-            }
-            .errorException {
-                color:#FF0000;
-                font-weight:bold;
-            }
             .respuestaCorrecta {
                 color:#4CAF50;
                 font-weight:bold;
@@ -52,61 +37,59 @@
                         <?php
                         /**
                          * @author Carlos García Cachón
-                         * @version 1.1
-                         * @since 15/11/2023
+                         * @version 1.0
+                         * @since 20/11/2023
                          */
-                        // Incluyo la libreria de validación para comprobar los campos
-                        require_once '../core/231018libreriaValidacion.php';
                         // Incluyo la configuración de conexión a la BD
-                        require_once '../config/confDB.php';
+                        require_once '../config/confDB_MySQLLi.php';
 
                         try {
                             // CONEXION CON LA BD
-                            // Establecemos la conexión por medio de PDO
-                            $miDB = new PDO(DSN, USERNAME, PASSWORD);
-                            echo ("<div class='respuestaCorrecta'>CONEXIÓN EXITOSA POR PDO</div><br><br>"); // Mensaje si la conexión es exitosa
+                            // Establecemos la conexión por medio de mysqli
+                            $mysqli = new mysqli(DSN, USERNAME, PASSWORD, DBNAME);
+                            echo ("<div class='respuestaCorrecta'>CONEXIÓN EXITOSA POR MYSQLI</div><br><br>"); // Mensaje si la conexión es exitosa
                             // CONSULTAS Y TRANSACCION
-                            $miDB->beginTransaction(); // Deshabilitamos el modo autocommit
+                            $mysqli->autocommit(false); // Deshabilitamos el modo autocommit
                             // Consultas SQL de inserción 
                             $consultaInsercion1 = "INSERT INTO T02_Departamento(T02_CodDepartamento, T02_DescDepartamento, T02_FechaCreacionDepartamento, T02_VolumenDeNegocio, T02_FechaBajaDepartamento) VALUES ('AAD', 'Departamento de Cobro', now(), 300, NULL)";
                             $consultaInsercion2 = "INSERT INTO T02_Departamento(T02_CodDepartamento, T02_DescDepartamento, T02_FechaCreacionDepartamento, T02_VolumenDeNegocio, T02_FechaBajaDepartamento) VALUES ('AAE', 'Departamento de I+D', now(), 10000, NULL)";
                             $consultaInsercion3 = "INSERT INTO T02_Departamento(T02_CodDepartamento, T02_DescDepartamento, T02_FechaCreacionDepartamento, T02_VolumenDeNegocio, T02_FechaBajaDepartamento) VALUES ('AAF', 'Departamento de Inmuebles', now(), 30, NULL)";
 
                             // Preparamos las consultas
-                            $resultadoconsultaInsercion1 = $miDB->prepare($consultaInsercion1);
-                            $resultadoconsultaInsercion2 = $miDB->prepare($consultaInsercion2);
-                            $resultadoconsultaInsercion3 = $miDB->prepare($consultaInsercion3);
+                            $resultadoconsultaInsercion1 = $mysqli->prepare($consultaInsercion1);
+                            $resultadoconsultaInsercion2 = $mysqli->prepare($consultaInsercion2);
+                            $resultadoconsultaInsercion3 = $mysqli->prepare($consultaInsercion3);
 
                             // Ejecuto las consultas preparadas y mostramos la tabla en caso 'true' o un mensaje de error en caso de 'false'.
                             // (La función 'execute()' devuelve un valor booleano que indica si la consulta se ejecutó correctamente o no.)
                             if ($resultadoconsultaInsercion1->execute() && $resultadoconsultaInsercion2->execute() && $resultadoconsultaInsercion3->execute()) {
-                                $miDB->commit(); // Confirma los cambios y los consolida
+                                $mysqli->commit(); // Confirma los cambios y los consolida
                                 echo ("<div class='respuestaCorrecta'>Los datos se han insertado correctamente en la tabla Departamento.</div>");
 
                                 // Preparamos y ejecutamos la consulta SQL
                                 $consulta = "SELECT * FROM T02_Departamento";
-                                $resultadoConsultaPreparada = $miDB->prepare($consulta);
+                                $resultadoConsultaPreparada = $mysqli->prepare($consulta);
                                 $resultadoConsultaPreparada->execute();
+
+                                // Obtenemos el resultado
+                                $resultado = $resultadoConsultaPreparada->get_result();
 
                                 // Creamos una tabla en la que mostraremos la tabla de la BD
                                 echo ("<div class='list-group text-center'>");
                                 echo ("<table>
-                            <thead>
-                            <tr>
-                                <th>Codigo de Departamento</th>
-                                <th>Descripcion de Departamento</th>
-                                <th>Fecha de Creacion</th>
-                                <th>Volumen de Negocio</th>
-                                <th>Fecha de Baja</th>
-                            </tr>
-                            </thead>");
+                                    <thead>
+                                    <tr>
+                                        <th>Codigo de Departamento</th>
+                                        <th>Descripcion de Departamento</th>
+                                        <th>Fecha de Creacion</th>
+                                        <th>Volumen de Negocio</th>
+                                        <th>Fecha de Baja</th>
+                                    </tr>
+                                    </thead>");
 
-                                /* Aqui recorremos todos los valores de la tabla, columna por columna, usando el parametro 'PDO::FETCH_ASSOC' , 
-                                 * el cual nos indica que los resultados deben ser devueltos como un array asociativo, donde los nombres de las columnas de 
-                                 * la tabla se utilizan como claves (keys) en el array.
-                                 */
+                                /* Recorremos todos los valores de la tabla, columna por columna */
                                 echo ("<tbody>");
-                                while ($oDepartamento = $resultadoConsultaPreparada->fetchObject()) {
+                                while ($oDepartamento = $resultado->fetch_object()) {
                                     echo ("<tr>");
                                     echo ("<td>" . $oDepartamento->T02_CodDepartamento . "</td>");
                                     echo ("<td>" . $oDepartamento->T02_DescDepartamento . "</td>");
@@ -117,23 +100,16 @@
                                 }
 
                                 echo ("</tbody>");
-                                /* Ahora usamos la función 'rowCount()' que nos devuelve el número de filas afectadas por la consulta y 
-                                 * almacenamos el valor en la variable '$numeroDeRegistros'
-                                 */
-                                $numeroDeRegistrosConsultaPreparada = $resultadoConsultaPreparada->rowCount();
+                                /* Usamos la función 'num_rows' para obtener el número de filas afectadas por la consulta */
+                                $numeroDeRegistrosResultado = $resultado->num_rows;
                                 // Y mostramos el número de registros
-                                echo ("<tfoot ><tr style='background-color: #666; color:white;'><td colspan='5'>Número de registros en la tabla Departamento: " . $numeroDeRegistrosConsultaPreparada . '</td></tr></tfoot>');
+                                echo ("<tfoot ><tr style='background-color: #666; color:white;'><td colspan='5'>Número de registros en la tabla Departamento: " . $numeroDeRegistrosResultado . '</td></tr></tfoot>');
                                 echo ("</table>");
                                 echo ("</div>");
                             }
-                        } catch (PDOException $miExcepcionPDO) {
-                            $miDB->rollback(); //  Revierte o deshace los cambios
-                            $errorExcepcion = $miExcepcionPDO->getCode(); // Almacenamos el código del error de la excepción en la variable '$errorExcepcion'
-                            $mensajeExcepcion = $miExcepcionPDO->getMessage(); // Almacenamos el mensaje de la excepción en la variable '$mensajeExcepcion'
-
-                            echo ("<div class='errorException'>Hubo un error al insertar los datos en la tabla Departamento.<br></div>");
-                            echo "<span class='errorException'>Error: </span>" . $mensajeExcepcion . "<br>"; // Mostramos el mensaje de la excepción
-                            echo "<span class='errorException'>Código del error: </span>" . $errorExcepcion; // Mostramos el código de la excepción
+                        } catch (mysqli_sql_exception $ex) {
+                            $mysqli->rollback();
+                            echo ("<div style='color: red' class='fs-4 text'>" . $ex->getCode() . " : " . $ex->getMessage()."</div>");
                         } finally {
                             unset($miDB); // Para cerrar la conexión
                         }

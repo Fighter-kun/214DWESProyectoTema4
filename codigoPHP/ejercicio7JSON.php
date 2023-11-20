@@ -36,7 +36,7 @@
 
     <body>
         <header class="text-center">
-            <h1>7. Página web que toma datos de un fichero xml y los añade a la tabla T02_Departamento de nuestra base de datos. El fichero importado se encuentra en el directorio .../tmp/ del servidor:</h1>
+            <h1>7. Página web que toma datos de un fichero json y los añade a la tabla T02_Departamento de nuestra base de datos. El fichero importado se encuentra en el directorio .../tmp/ del servidor:</h1>
         </header>
         <main>
             <div class="container mt-3">
@@ -69,9 +69,6 @@
                          */
                         error_reporting(E_ALL);
 
-                        // Incluyo la configuración de conexión a la BD
-                        require_once '../config/confDB.php';
-
                         // Declaro una variable de entrada para mostrar o no la tabla con los valores de la BD
                         $bEntradaOK = true;
 
@@ -85,11 +82,6 @@
                              * PASSWORD -> Contraseña del usuario
                              * */
                             $miDB = new PDO(DSN, USERNAME, PASSWORD);
-
-                            /**
-                             * Modificamos los errores y añadimos los siguientes atributos de PDO
-                             */
-                            $miDB->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
                             // Indicamos la ruta del archivo y la guardamos en una variable
                             $rutaArchivoJSON = '../tmp/departamentos.json';
@@ -137,16 +129,10 @@
                                     ':FechaBajaDepartamento' => $fechaBajaDepartamento
                                 ];
 
-                                if (!$resultadoconsultaInsercion->execute($aRegistros)) {
-                                    $bEntradaOK = false;
-                                    break;
-                                }
+                                $resultadoconsultaInsercion->execute($aRegistros);
                             }
                             
-                            // Ejecuto la consulta preparada y mostramos la tabla en caso 'true' o un mensaje de error en caso de 'false'.
-                            // (La función 'execute()' devuelve un valor booleano que indica si la consulta se ejecutó correctamente o no.)
-                            if ($bEntradaOK) {
-                                $miDB->commit(); // Confirma los cambios y los consolida
+                            $miDB->commit(); // Confirma los cambios y los consolida
                                 echo ("<div class='respuestaCorrecta'>Los datos se han insertado correctamente en la tabla Departamento.</div>");
 
                                 // Preparamos y ejecutamos la consulta SQL
@@ -191,7 +177,6 @@
                                 echo ("<tfoot ><tr style='background-color: #666; color:white;'><td colspan='5'>Número de registros en la tabla Departamento: ".$numeroDeRegistrosConsultaPreparada.'</td></tr></tfoot>');
                                 echo ("</table>");
                                 echo ("</div>");
-                            }
 
                             //Controlamos las excepciones mediante la clase PDOException
                         } catch (PDOException $miExcepcionPDO) {
