@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <!--
-        Descripción: CodigoEjercicio8JSON
+        Descripción: CodigoEjercicio8XML
         Autor: Carlos García Cachón
         Fecha de creación/modificación: 16/11/2023
 -->
@@ -8,8 +8,8 @@
     <head>
         <meta charset="UTF-8">
         <meta name="author" content="Carlos García Cachón">
-        <meta name="description" content="CodigoEjercicio8JSON">
-        <meta name="keywords" content="CodigoEjercicio, 8JSON">
+        <meta name="description" content="CodigoEjercicio8XML">
+        <meta name="keywords" content="CodigoEjercicio, 8XML">
         <meta name="generator" content="Apache NetBeans IDE 19">
         <meta name="generator" content="60">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -32,21 +32,22 @@
                         /**
                          * @author Alvaro Cordero Miñambres 
                          * Adaptado por @author Carlos García Cachón
-                         * @version 1.0
-                         * @since 16/11/2023
+                         * @version 1.1
+                         * @since 20/11/2023
+                         * 
+                         * @Annotation Exportando archivos en formato .xml
                          */
-                        // Incluyo la configuración de conexión a la BD
-                        require_once '../config/confDB.php';
 
-                        /*                         * Funciones para tener un mayor control sobre nuestros errores
+
+                        /**Funciones para tener un mayor control sobre nuestros errores
                          *
                          * La función ini_set('display_errors', 1); es una instrucción de configuración en PHP que se utiliza para activar la visualización de 
-                          errores en tiempo de ejecución en el navegador web.
+                            errores en tiempo de ejecución en el navegador web.
                          * Mostrará los errores directamente en la página web si ocurren durante la ejecución del script PHP.
                          */
                         ini_set('display_errors', 1);
 
-                        /*                         * Se utiliza para activar la visualización de errores que ocurren durante 
+                        /**Se utiliza para activar la visualización de errores que ocurren durante 
                          * el inicio del script, es decir, durante la fase de arranque (startup) del proceso PHP. */
                         ini_set('display_startup_errors', 1);
 
@@ -85,7 +86,7 @@
                             //Ejecutamos la consulta
                             $resultadoConsulta->execute();
 
-                            /*                             * +
+                            /**+
                              * Mostramos el numero de registros que hemos seleccionado
                              * el metodo rowCount() devuelve el numero de filas que tiene la consulta
                              */
@@ -94,53 +95,66 @@
                             //Mediante echo mostranmos la variable que almacena el numero de registros
                             echo ('Numero de registros: ' . $numRegistros);
 
+                            /**
+                             * Instanciamos el nuevo documento usando el objeto DOMDocument
+                             * Le asignamos dos parametros -> Version, Codificacion XML
+                             */
+                            $archivoXML = new DOMDocument("1.0", "utf-8");
+
+                            //Le decimos que queremos formatear el codigo poniendo a true la propiedad formatOutput
+                            $archivoXML->formatOutput = true;
+
+                            /**Creo el nodo raiz departamentos del de dependeran los demas
+                             * createElement() -> Crea un nuevo nodo elemento
+                             * En este caso le pasamos como parametro el nombre del elemento
+                             * */
+                            $nDepartamentos = $archivoXML->createElement('Departamentos');
+
+                            /**Introduzco el nodo raiz en el archivo
+                             * appenChild() -> Añade un nuevo hijo al final de los hijos
+                             */
+                            $root = $archivoXML->appendChild($nDepartamentos);
+
                             //Guardo el primer registro como un objeto
                             $oResultado = $resultadoConsulta->fetchObject();
 
-                            // Inicializamos un array vacío para almacenar todos los departamentos
-                            $aDepartamentos = [];
-
-                            //Inicializamos el contador
-                            $numeroDepartamento = 0;
                             /**
-                             * Recorro los registros que devuelve la consulta y obtengo por cada valor su resultado
+                             *Recorro los registros que devuelve la consulta y obtengo por cada valor su resultado
                              */
                             while ($oResultado) {
                                 //Guardamos los valores en un array asociativo
-                                $aDepartamento = [
-                                    'codDepartamento' => $oResultado->T02_CodDepartamento,
-                                    'descDepartamento' => $oResultado->T02_DescDepartamento,
-                                    'fechaCreacionDepartamento' => $oResultado->T02_FechaCreacionDepartamento,
-                                    'volumenNegocio' => $oResultado->T02_VolumenDeNegocio,
-                                    'fechaBajaDepartamento' => $oResultado->T02_FechaBajaDepartamento
-                                ];
+                                //Creo el nodo departamento para cada uno de ellos
+                                $nDepartamento = $root->appendChild($archivoXML->createElement('Departamento'));
 
-                                // Añadimos el array $aDepartamento al array $aDepartamentos
-                                $aDepartamentos[] = $aDepartamento;
+                                //Creo el elemento con el nombre CodDepartamento y despues el valor obtenido de la consulta
+                                $nDepartamento->appendChild($archivoXML->createElement('CodDepartamento', $oResultado->T02_CodDepartamento));
+                                
+                                //Creo el elemento con el nombre DescDepartamento y despues el valor obtenido de la consulta
+                                $nDepartamento->appendChild($archivoXML->createElement('DescDepartamento', $oResultado->T02_DescDepartamento));
 
-                                //Incremento el contador de departamentos para almacenar informacion el la siguiente posicion        
-                                $numeroDepartamento++;
+                                //Creo el elemento con el nombre FechaCreacion Departamento y despues el valor obtenido de la consulta
+                                $nDepartamento->appendChild($archivoXML->createElement('FechaCreacionDepartamento', $oResultado->T02_FechaCreacionDepartamento));
+
+                                //Creo el elemento con el nombre VolumenNegocio y despues el valor obtenido de la consulta          
+                                $nDepartamento->appendChild($archivoXML->createElement('VolumenDeNegocio', $oResultado->T02_VolumenDeNegocio));
+
+                                /**
+                                 * A la fechaBaja no le soy valor porque por defecto es null.
+                                 */
+                                $nDepartamento->appendChild($archivoXML->createElement('FechaBajaDepartamento'));
 
                                 //Guardo el registro actual y avanzo el puntero al siguiente registro que obtengo de la consulta
                                 $oResultado = $resultadoConsulta->fetchObject();
                             }
 
-
                             /**
-                             * La funcion json_encode devuelve un string con la representacion JSON
-                             * Le pasamos el array aDepartamentos y utilizanos el atributo JSON_PRRETY_PRINT para que use espacios en blanco para formatear los datos devueltos.
+                             * Guardamos el archivo en la ruta indicada
+                             * save() -> Copia el árbol XML interno a un archivo
                              */
-                            $json = json_encode($aDepartamentos, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
-
-                            /**
-                             * Mediante la funcion file_put_contents() podremos escribir informacion en un fichero
-                             * Pasandole como parametros la ruta donde queresmos que se guarde y el que queremos sobrescribir
-                             * JSON_UNESCAPED_UNICODE: Codifica caracteres Unicode multibyte literalmente
-                             */
-                            file_put_contents("../tmp/departamentos.json", $json);
+                            $archivoXML->save('../tmp/departamentos.xml');
 
                             //Mediante echo mostramos el numero de bytes escritos
-                            echo ("<br><span style='color: green'>Exportado correctamente</span>");
+                            echo ("<br><div style=' color: green';>Exportado correctamente</div>");
 
                             //Controlamos las excepciones mediante la clase PDOException
                         } catch (PDOException $miExcepcionPDO) {

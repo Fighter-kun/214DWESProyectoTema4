@@ -35,48 +35,39 @@
                      * @version 1.1
                      * @since 03/11/2023
                      */
-                    define('HOST','192.168.20.19'); // Nombre del servidor de la base de datos
-                    define('DBNAME','DB214DWESProyectoTema4'); // Nombre de la base de datos
-                    define('USERNAME','user214DWESProyectoTema4'); // Nombre de usuario de la base de datos
-                    define('PASSWORD','paso'); // Contraseña de la base de datos
-                    // Utilizamos el bloque 'try'
-                    try {
-                        // Establecemos la conexión por medio de MySQLLi
-                        $miDB = new mysqli(HOST, USERNAME, PASSWORD, DBNAME);
+                    // Incluyo el fichero que guarda la cofiguración de la conexión por MySQLLi
+                    require_once '../config/confDB_MySQLLi.php';
 
-                        $error = $miDB->connect_errno; // Para controlar los posibles errores de conexión
-                        if ($error) {
-                            throw new Exception("ERROR DE CONEXION: " . $conn->connect_error);
+                    try {
+                        $mysqli = new mysqli(DSN, USERNAME, PASSWORD, DBNAME);
+
+                        echo ("<div style='color: green' class='fs-4 text'>Conexión exitosa a MySQL</div>" . $mysqli->host_info);
+                    } catch (mysqli_sql_exception $ex) {
+                        echo ("<div style='color: red' class='fs-4 text'>Fallo al conectar a MySQL (" . $mysqli->connect_errno . ")</div>" . $mysqli->connect_error);
+                    } finally {
+                        // Cerramos la conexión si está abierta
+                        if ($mysqli && $mysqli->connect_errno === 0) {
+                            $mysqli->close();
                         }
-                        
-                        echo ("CONEXION EXITOSA POR MEDIO DE MYSQLLI");
-                    } catch (Exception $ex) {
-                        echo ("ERROR DE CONEXION: ".$ex->getMessage());
                     }
-                    unset($miDB); //Para cerrar la conexión
                     ?>
-                    <br><br>
-                    <h2>CONEXION POR MEDIO DE MYSQLLI (FALLIDA):</h2>
+                    <h2>CONEXION FALLIDA POR MEDIO DE MYSQLLI:</h2>
                     <?php
-                    /* Si quisieramos hacer que salte la 'Exception' , deberemos de poner algún dato erroneo al crear el objeto.
-                     * Para ello duplicamos el bloque de código anterior, pero añadiendo un dato erroneo, en este caso podremos mal
-                     * el '$host' .
-                     */ 
-                    // Utilizamos el bloque 'try'
-                    try {
-                        // Establecemos la conexión por medio de MySQLLi
-                        $miDB = new mysqli(HOST, USERNAME, 'paso1', DBNAME); // Aqui ponemos mal la contraseña para buscar el mensaje de error
+                    // Incluyo el fichero que guarda la cofiguración de la conexión por MySQLLi
+                    require_once '../config/confDB_MySQLLi.php';
 
-                        $error = $miDB->connect_errno; // Para controlar los posibles errores de conexión
-                        if ($error) {
-                            throw new Exception("ERROR DE CONEXION: " . $conn->connect_error);
-                        }
-                        
-                        echo ("CONEXION EXITOSA POR MEDIO DE MYSQLLI");
+                    try {
+                        $mysqli = new mysqli(DSN, USERNAME, 'PASSWORD', DBNAME);
+
+                        echo ("<div style='color: green' class='fs-4 text'>Conexión exitosa a MySQL</div>" . $mysqli->host_info);
                     } catch (Exception $ex) {
-                        echo ("ERROR DE CONEXION: ".$ex->getMessage());
+                        echo ("<div style='color: red' class='fs-4 text'>Fallo al conectar a MySQL (" . $mysqli->connect_errno . ")</div>" . $mysqli->connect_error);
+                    } finally {
+                        // Comprobamos si no hay ningun error de conexión con la BD
+                        if ($mysqli && $mysqli->connect_errno === 0) {
+                            $mysqli->close(); // Cerramos la conexión
+                        }
                     }
-                    unset($miDB); //Para cerrar la conexión
                     ?>
                 </div>
             </div>

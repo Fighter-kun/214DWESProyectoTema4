@@ -1,15 +1,15 @@
 <!DOCTYPE html>
 <!--
-	Descripción: CodigoEjercicio7JSON
+	Descripción: CodigoEjercicio4MYSQLLI
 	Autor: Carlos García Cachón
-	Fecha de creación/modificación: 16/11/2023
+	Fecha de creación/modificación: 20/11/2023
 -->
 <html lang="es">
 <head>
   <meta charset="UTF-8">
   <meta name="author" content="Carlos García Cachón">
-  <meta name="description" content="CodigoEjercicio7JSON">
-  <meta name="keywords" content="CodigoEjercicio7JSON">
+  <meta name="description" content="CodigoEjercicio4MYSQLLI">
+  <meta name="keywords" content="CodigoEjercicio4MYSQLLI">
   <meta name="generator" content="Apache NetBeans IDE 19">
   <meta name="generator" content="60">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -23,18 +23,18 @@
 
 <body>
     <header class="text-center">
-        <h1>7. Página web que toma datos de un fichero json y los añade a la tabla T02_Departamento de nuestra base de datos. El fichero importado se encuentra en el directorio .../tmp/ del servidor:</h1>
-    </header>
+        <h1>4. Formulario de búsqueda de departamentos por descripción (por una parte del campo DescDepartamento, si el usuario no pone nada deben aparecer todos los departamentos):</h1>
+        </header>
     <main>
         <div class="container justify-content-start">
             <?php
                 /**
                  * @author Carlos García Cachón
                  * @version 1.0 
-                 * @since 16/11/2023
+                 * @since 20/11/2023
                  */
                 //Muestra el codigo del archivo de la ruta especificada.
-                highlight_file('../codigoPHP/ejercicio7JSON.php');
+                highlight_file('../codigoPHP/ejercicio4MYSQLLI.php');
             ?>
         </div>
     </main>
