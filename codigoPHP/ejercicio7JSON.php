@@ -1,15 +1,15 @@
 <!DOCTYPE html>
 <!--
-        Descripción: CodigoEjercicio6PDO
+        Descripción: CodigoEjercicio7JSON
         Autor: Carlos García Cachón
-        Fecha de creación/modificación: 08/11/2023
+        Fecha de creación/modificación: 16/11/2023
 -->
 <html lang="es">
     <head>
         <meta charset="UTF-8">
         <meta name="author" content="Carlos García Cachón">
-        <meta name="description" content="CodigoEjercicio6PDO">
-        <meta name="keywords" content="CodigoEjercicio, 6PDO">
+        <meta name="description" content="CodigoEjercicio7JSON">
+        <meta name="keywords" content="CodigoEjercicio, 7JSON">
         <meta name="generator" content="Apache NetBeans IDE 19">
         <meta name="generator" content="60">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -19,13 +19,6 @@
               integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
         <link rel="stylesheet" href="../webroot/css/style.css">
         <style>
-            .obligatorio {
-                background-color: #ffff7a;
-            }
-            .bloqueado:disabled {
-                background-color: #665 ;
-                color: white;
-            }
             .error {
                 color: red;
                 width: 450px;
@@ -43,7 +36,7 @@
 
     <body>
         <header class="text-center">
-            <h1>6. Pagina web que cargue registros en la tabla Departamento desde un array departamentosnuevos utilizando una consulta preparada:</h1>
+            <h1>7. Página web que toma datos de un fichero json y los añade a la tabla T02_Departamento de nuestra base de datos. El fichero importado se encuentra en el directorio .../tmp/ del servidor:</h1>
         </header>
         <main>
             <div class="container mt-3">
@@ -52,23 +45,59 @@
                         <?php
                         /**
                          * @author Carlos García Cachón
-                         * @version 1.1
-                         * @since 15/11/2023
+                         * @version 1.0
+                         * @since 16/11/2023
                          */
-                        // Incluyo la libreria de validación para comprobar los campos
-                        require_once '../core/231018libreriaValidacion.php';
                         // Incluyo la configuración de conexión a la BD
                         require_once '../config/confDB.php';
-                        
-                        // Defino una constante para la fecha y hora actual
-                        define('FECHA_ACTUAL', date('Y-m-d H:i:s'));
 
+                        /*                         * Funciones para tener un mayor control sobre nuestros errores
+                         *
+                         * La función ini_set('display_errors', 1); es una instrucción de configuración en PHP que se utiliza para activar la visualización de 
+                          errores en tiempo de ejecución en el navegador web.
+                         * Mostrará los errores directamente en la página web si ocurren durante la ejecución del script PHP.
+                         */
+                        ini_set('display_errors', 1);
+
+                        /*                         * Se utiliza para activar la visualización de errores que ocurren durante 
+                         * el inicio del script, es decir, durante la fase de arranque (startup) del proceso PHP. */
+                        ini_set('display_startup_errors', 1);
+
+                        /**
+                         * Establece el nivel de error que se informará durante la ejecución de un script PHP. 
+                         * En este caso, E_ALL es una constante que representa todos los tipos de errores posibles en PHP.
+                         */
+                        error_reporting(E_ALL);
+
+                        // Declaro una variable de entrada para mostrar o no la tabla con los valores de la BD
+                        $bEntradaOK = true;
+
+                        //Abro un bloque try catch para tener un mayor control de los errores
                         try {
                             // CONEXION CON LA BD
-                            // Establecemos la conexión por medio de PDO
+                            /**
+                             * Establecemos la conexión por medio de PDO
+                             * DSN -> IP del servidor y Nombre de la base de datos
+                             * USER -> Usuario con el que se conecta a la base de datos
+                             * PASSWORD -> Contraseña del usuario
+                             * */
                             $miDB = new PDO(DSN, USERNAME, PASSWORD);
-                            echo ("<div class='respuestaCorrecta'>CONEXIÓN EXITOSA POR PDO</div><br><br>"); // Mensaje si la conexión es exitosa
 
+                            // Indicamos la ruta del archivo y la guardamos en una variable
+                            $rutaArchivoJSON = '../tmp/departamentos.json';
+                            
+                            // Leemos el contenido del archivo JSON
+                            $contenidoArchivoJSON = file_get_contents($rutaArchivoJSON);
+
+                            // Decodificamos el JSON a un array asociativo
+                            $aContenidoDecodificadoArchivoJSON = json_decode($contenidoArchivoJSON, true);
+                            
+                            // Verificamos si la decodificación fue exitosa
+                            if ($aContenidoDecodificadoArchivoJSON === null && json_last_error() !== JSON_ERROR_NONE) {
+                                // En caso negativo "matamos" la ejecución del script
+                                die('Error al decodificar el archivo JSON.');
+                            }
+                            
                             // CONSULTAS Y TRANSACCION
                             $miDB->beginTransaction(); // Deshabilitamos el modo autocommit
 
@@ -78,21 +107,31 @@
 
                             // Preparamos las consultas
                             $resultadoconsultaInsercion = $miDB->prepare($consultaInsercion);
-                            
-                            // ARRAY CON REGISTROS
-                            $aDepartamentosNuevos  = [
-                                ['CodDepartamento' => 'AAG','DescDepartamento' => 'Departamento de Montaje', 'FechaCreacionDepartamento' => FECHA_ACTUAL, 'VolumenDeNegocio' => 50, 'FechaBajaDepartamento' => null],
-                                ['CodDepartamento' => 'AAH','DescDepartamento' => 'Departamento de Desmontaje', 'FechaCreacionDepartamento' => FECHA_ACTUAL, 'VolumenDeNegocio' => 700, 'FechaBajaDepartamento' => null]
-                                ];
-                            
-                            foreach($aDepartamentosNuevos as $departamento){ //Recorremos los registros que vamos a insertar en la tabla
-                                $aResgistros = [':CodDepartamento' => $departamento['CodDepartamento'], 
-                                               ':DescDepartamento' => $departamento['DescDepartamento'], 
-                                               ':FechaCreacionDepartamento' => $departamento['FechaCreacionDepartamento'],
-                                               ':VolumenDeNegocio' => $departamento['VolumenDeNegocio'],
-                                               ':FechaBajaDepartamento' => $departamento['FechaBajaDepartamento']];
-                            }
+ 
+                            foreach ($aContenidoDecodificadoArchivoJSON as $departamento) { 
+                                // Recorremos los registros que vamos a insertar en la tabla
+                                $codDepartamento = $departamento['codDepartamento'];
+                                $descDepartamento = $departamento['descDepartamento'];
+                                $fechaCreacionDepartamento = $departamento['fechaCreacionDepartamento'];
+                                $volumenNegocio = $departamento['volumenNegocio'];
+                                $fechaBajaDepartamento = $departamento['fechaBajaDepartamento'];
 
+                                // Si la fecha de baja está vacía asignamos el valor 'NULL'
+                                if (empty($fechaBajaDepartamento)) {
+                                    $fechaBajaDepartamento = NULL;
+                                }
+
+                                $aRegistros = [
+                                    ':CodDepartamento' => $codDepartamento,
+                                    ':DescDepartamento' => $descDepartamento,
+                                    ':FechaCreacionDepartamento' => $fechaCreacionDepartamento,
+                                    ':VolumenDeNegocio' => $volumenNegocio,
+                                    ':FechaBajaDepartamento' => $fechaBajaDepartamento
+                                ];
+
+                                $resultadoconsultaInsercion->execute($aRegistros);
+                            }
+                            
                             $miDB->commit(); // Confirma los cambios y los consolida
                                 echo ("<div class='respuestaCorrecta'>Los datos se han insertado correctamente en la tabla Departamento.</div>");
 
@@ -138,22 +177,36 @@
                                 echo ("<tfoot ><tr style='background-color: #666; color:white;'><td colspan='5'>Número de registros en la tabla Departamento: ".$numeroDeRegistrosConsultaPreparada.'</td></tr></tfoot>');
                                 echo ("</table>");
                                 echo ("</div>");
-                        } catch (PDOException $miExcepcionPDO) {
-                            $miDB->rollback(); //  Revierte o deshace los cambios
-                            $errorExcepcion = $miExcepcionPDO->getCode(); // Almacenamos el código del error de la excepción en la variable '$errorExcepcion'
-                            $mensajeExcepcion = $miExcepcionPDO->getMessage(); // Almacenamos el mensaje de la excepción en la variable '$mensajeExcepcion'
 
-                            echo ("<div class='errorException'>Hubo un error al insertar los datos en la tabla Departamento.<br></div>");
-                            echo "<span class='errorException'>Error: </span>" . $mensajeExcepcion . "<br>"; // Mostramos el mensaje de la excepción
-                            echo "<span class='errorException'>Código del error: </span>" . $errorExcepcion; // Mostramos el código de la excepción
+                            //Controlamos las excepciones mediante la clase PDOException
+                        } catch (PDOException $miExcepcionPDO) {
+                            /**
+                             * Revierte o deshace los cambios
+                             * Esto solo se usara si estamos usando consultas preparadas
+                             */
+                            $miDB->rollback();
+
+                            //Almacenamos el código del error de la excepción en la variable '$errorExcepcion'
+                            $errorExcepcion = $miExcepcionPDO->getCode();
+
+                            // Almacenamos el mensaje de la excepción en la variable '$mensajeExcepcion'
+                            $mensajeExcepcion = $miExcepcionPDO->getMessage();
+
+                            // Mostramos el mensaje de la excepción
+                            echo "<span style='color: red'>Error: </span>" . $mensajeExcepcion . "<br>";
+
+                            // Mostramos el código de la excepción
+                            echo "<span style='color: red'>Código del error: </span>" . $errorExcepcion;
+
+                            //En culaquier cosa cerramos la sesion
                         } finally {
-                            unset($miDB); // Para cerrar la conexión
+                            // El metodo unset sirve para cerrar la sesion con la base de datos
+                            unset($miDB);
                         }
                         ?>
                     </div>
                 </div>
             </div>
-        </div>
     </main>
     <footer class="position-fixed bottom-0 end-0">
         <div class="row text-center">
