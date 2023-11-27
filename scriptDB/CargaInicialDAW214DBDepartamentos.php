@@ -20,9 +20,9 @@ try {
 
     // Inserto los datos iniciales en la tabla Departamento
     $query2 = "INSERT INTO T02_Departamento (T02_CodDepartamento, T02_DescDepartamento, T02_FechaCreacionDepartamento, T02_VolumenDeNegocio, T02_FechaBajaDepartamento) VALUES
-    ('AAA', 'Departamento de Ventas', '2023-11-13 13:06:00', 100000.50, NULL),
-    ('AAB', 'Departamento de Marketing', '2023-11-13 13:06:00', 50089.50, NULL),
-    ('AAC', 'Departamento de Finanzas', '2022-11-13 13:06:00', 600.50, '2023-11-13 13:06:00')";
+    ('AAA', 'Departamento de Ventas', NOW(), 100000.50, NULL),
+    ('AAB', 'Departamento de Marketing', NOW(), 50089.50, NULL),
+    ('AAC', 'Departamento de Finanzas', NOW(), 600.50, '2023-11-13 13:06:00')";
 
     // Ejecutar consultas SQL
     $sql_queries = [$query1, $query2];

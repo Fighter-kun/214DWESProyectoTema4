@@ -14,12 +14,15 @@ require_once '../config/confDB.php';
 try {
     // Crear conexión
     $conn = new PDO(DSN, USERNAME, PASSWORD);
+    
+    // Utilizar la base de datos 
+    $query1 = "USE dbs12302455;";
 
     // Elimino el usuario de la base de datos
-    $query1 = "DROP TABLE  T02_Departamento";
+    $query2 = "DROP TABLE  T02_Departamento";
 
     // Ejecutar consultas SQL
-    $sql_queries = [$query1];
+    $sql_queries = [$query1, $query2];
 
     foreach ($sql_queries as $query) {
         if ($conn->query($query) === FALSE) {

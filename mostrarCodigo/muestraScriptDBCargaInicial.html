@@ -36,10 +36,10 @@
                             USE DB214DWESProyectoTema4;
 
                             -- Inserto los datos iniciales en la tabla Departamento
-                            INSERT INTO Departamento (CodDepartamento, DescDepartamento, FechaBaja, VolumenNegocio) VALUES
-                                ('AAA', 'Departamento de Ventas', NULL, 100000.50),
-                                ('AAB', 'Departamento de Marketing', '2022-01-15 08:00:00', 75000.75),
-                                ('AAC', 'Departamento de Finanzas', NULL, 120000.00);
+                            INSERT INTO T02_Departamento (T02_CodDepartamento, T02_DescDepartamento, T02_FechaCreacionDepartamento, T02_VolumenDeNegocio, T02_FechaBajaDepartamento) VALUES
+                                ('AAA', 'Departamento de Ventas', NOW(), 100000.50, NULL),
+                                ('AAB', 'Departamento de Marketing', NOW(), 50089.50, NULL),
+                                ('AAC', 'Departamento de Finanzas', NOW(), 600.50, '2023-11-13 13:06:00');
                         </code></pre>
                     </div>
                 </div>

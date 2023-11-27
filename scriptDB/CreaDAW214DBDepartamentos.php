@@ -15,11 +15,14 @@ try {
     // Crear conexión
     $conn = new PDO(DSN, USERNAME, PASSWORD);
     
+    // Eliminar tabla de la base de datos en caso de que exista
+    $query1 = "DROP TABLE IF EXISTS T02_Departamento;";
+    
     // Utilizamos la base de datos 
-    $query1 = "USE dbs12302455";
+    $query2 = "USE dbs12302455";
     
     // Creamos la tabla Departamento
-    $query2 = "CREATE TABLE T02_Departamento (
+    $query3 = "CREATE TABLE T02_Departamento (
         T02_CodDepartamento CHAR(3) PRIMARY KEY,
         T02_DescDepartamento VARCHAR(255),
         T02_FechaCreacionDepartamento DATETIME,
@@ -28,7 +31,7 @@ try {
     )";
 
     // Ejecutar consultas SQL
-    $sql_queries = [$query1, $query2];
+    $sql_queries = [$query1, $query2, $query3];
 
     foreach ($sql_queries as $query) {
         if ($conn->query($query) === FALSE) {
