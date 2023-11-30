@@ -2,34 +2,29 @@
 /**
  * @author Carlos García Cachón
  * @version 1.0
- * @since 27/11/2023
+ * @since 30/11/2023
  * @copyright Todos los derechos reservados Carlos García 
  * 
- * @Annotation Scrip de carga inicial de la base de datos en PHP
+ * @Annotation Scrip de borrado de la base de datos en Explotación
  * 
  */
-// Configuración de conexión con la base de datos
-require_once '../config/confDB.php';
+define('DSN', 'mysql:host=db5014806801.hosting-data.io;dbname=dbs12302455'); // Host y nombre de la base de datos
+define('USERNAME','dbu132588'); // Nombre de usuario de la base de datos
+define('PASSWORD','daw2_Sauces'); // Contraseña de la base de datos
 
 try {
     // Crear conexión
     $conn = new PDO(DSN, USERNAME, PASSWORD);
-    
-    // Utilizar la base de datos 
-    $query1 = "USE dbs12302455;";
 
-    // Elimino el usuario de la base de datos
-    $query2 = "DROP TABLE  T02_Departamento";
+    // Eliminamos la tabla T02_Departamento
+    $consulta = <<<CONSULTA
+            USE dbs12302455;
+            DROP TABLE  T02_Departamento
+            CONSULTA;
+    $consultaPreparada = $conn->prepare($consulta);
+    $consultaPreparada->execute();
 
-    // Ejecutar consultas SQL
-    $sql_queries = [$query1, $query2];
-
-    foreach ($sql_queries as $query) {
-        if ($conn->query($query) === FALSE) {
-            throw new Exception("Error al ejecutar la consulta: $query - " . $conn->error);
-        }
-        echo "Consulta ejecutada con éxito: $query<br>";
-    }
+    echo "<span style='color:green;'>Valor cargados correctamente</span>"; // Mostramos el mensaje si la consulta se a ejecutado correctamente
 } catch (PDOException $miExcepcionPDO) {
     $errorExcepcion = $miExcepcionPDO->getCode(); // Almacenamos el código del error de la excepción en la variable '$errorExcepcion'
     $mensajeExcepcion = $miExcepcionPDO->getMessage(); // Almacenamos el mensaje de la excepción en la variable '$mensajeExcepcion'
