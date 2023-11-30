@@ -21,7 +21,7 @@ CREATE TABLE T02_Departamento (
     T02_FechaCreacionDepartamento DATETIME,
     T02_VolumenDeNegocio FLOAT,
     T02_FechaBajaDepartamento DATETIME
-);
+)ENGINE=INNODB;
 
 --Creación del usuario de la base de datos
 CREATE USER 'user214DWESProyectoTema4'@'%' IDENTIFIED BY 'paso';

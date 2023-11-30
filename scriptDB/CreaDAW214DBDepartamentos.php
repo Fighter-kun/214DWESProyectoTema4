@@ -2,49 +2,38 @@
 /**
  * @author Carlos García Cachón
  * @version 1.0
- * @since 27/11/2023
+ * @since 30/11/2023
  * @copyright Todos los derechos reservados Carlos García 
  * 
- * @Annotation Scrip de creación de la base de datos en PHP
+ * @Annotation Scrip de creación de la base de datos en Explotación
  * 
  */
-// Configuración de conexión con la base de datos
-require_once '../config/confDB.php';
+define('DSN', 'mysql:host=db5014806801.hosting-data.io;dbname=dbs12302455'); // Host y nombre de la base de datos
+define('USERNAME','dbu132588'); // Nombre de usuario de la base de datos
+define('PASSWORD','daw2_Sauces'); // Contraseña de la base de datos
 
 try {
     // Crear conexión
     $conn = new PDO(DSN, USERNAME, PASSWORD);
     
-    // Eliminar tabla de la base de datos en caso de que exista
-    $query1 = "DROP TABLE IF EXISTS T02_Departamento;";
-    
-    // Utilizamos la base de datos 
-    $query2 = "USE dbs12302455";
-    
-    // Creamos la tabla Departamento
-    $query3 = "CREATE TABLE T02_Departamento (
+    // Creamos la tabla T02_Departamento
+    $consulta = "CREATE TABLE IF NOT EXISTS dbs12302455.T02_Departamento (
         T02_CodDepartamento CHAR(3) PRIMARY KEY,
         T02_DescDepartamento VARCHAR(255),
         T02_FechaCreacionDepartamento DATETIME,
         T02_VolumenDeNegocio FLOAT,
         T02_FechaBajaDepartamento DATETIME
-    )";
+    )ENGINE=INNODB;";
+    $consultaPreparada = $conn->prepare($consulta);
+    $consultaPreparada->execute();
 
-    // Ejecutar consultas SQL
-    $sql_queries = [$query1, $query2, $query3];
-
-    foreach ($sql_queries as $query) {
-        if ($conn->query($query) === FALSE) {
-            throw new Exception("Error al ejecutar la consulta: $query - " . $conn->error);
-        }
-        echo "Consulta ejecutada con éxito: $query<br>";
-    }
+    echo "<span style='color:green;'>Tabla Creada correctamente</span>"; // Mostramos el mensaje si la consulta se a ejecutado correctamente
 } catch (PDOException $miExcepcionPDO) {
     $errorExcepcion = $miExcepcionPDO->getCode(); // Almacenamos el código del error de la excepción en la variable '$errorExcepcion'
     $mensajeExcepcion = $miExcepcionPDO->getMessage(); // Almacenamos el mensaje de la excepción en la variable '$mensajeExcepcion'
 
-    echo "<span class='errorException'>Error: </span>" . $mensajeExcepcion . "<br>"; // Mostramos el mensaje de la excepción
-    echo "<span class='errorException'>Código del error: </span>" . $errorExcepcion; // Mostramos el código de la excepción
+    echo "<span style='color:red;'>Error: </span>" . $mensajeExcepcion . "<br>"; // Mostramos el mensaje de la excepción
+    echo "<span style='color:red;'>Código del error: </span>" . $errorExcepcion; // Mostramos el código de la excepción
     die($miExcepcionPDO);
 } finally {
     // Cerrar la conexión
