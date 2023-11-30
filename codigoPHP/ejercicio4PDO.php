@@ -239,7 +239,7 @@
                                         <tr>
                                             <!-- CodDepartamento Obligatorio -->
                                             <td class="d-flex justify-content-start">
-                                                <label for="DescDepartamento">Codigo de Departamento:</label>
+                                                <label for="DescDepartamento">Descripción de Departamento:</label>
                                             </td>
                                             <td>                                                                                                <!-- El value contiene una operador ternario en el que por medio de un metodo 'isset()'
                                                                                                                                                 comprobamos que exista la variable y no sea 'null'. En el caso verdadero devovleremos el contenido del campo

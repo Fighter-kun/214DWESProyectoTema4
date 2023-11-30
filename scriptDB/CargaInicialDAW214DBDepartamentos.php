@@ -27,7 +27,7 @@ try {
     $consultaPreparada = $conn->prepare($consulta);
     $consultaPreparada->execute();
 
-    echo "<span style='color:green;'>Valor cargados correctamente</span>"; // Mostramos el mensaje si la consulta se a ejecutado correctamente
+    echo "<span style='color:green;'>Valores cargados correctamente</span>"; // Mostramos el mensaje si la consulta se a ejecutado correctamente
 } catch (PDOException $miExcepcionPDO) {
     $errorExcepcion = $miExcepcionPDO->getCode(); // Almacenamos el código del error de la excepción en la variable '$errorExcepcion'
     $mensajeExcepcion = $miExcepcionPDO->getMessage(); // Almacenamos el mensaje de la excepción en la variable '$mensajeExcepcion'
