@@ -37,7 +37,7 @@
                      */
                     // Utilizamos el bloque 'try'
                     try {
-                        require_once '../config/confDB_MySQLLi.php';
+                        require_once '../config/confDBMySQLi.php';
                         // Establecemos la conexión por medio de PDO
                         $mysqli = new mysqli(DSN, USERNAME, PASSWORD, DBNAME);
                         echo ("<span style='color:green;'>CONEXIÓN EXITOSA POR MYSQLLI</span><br><br>"); // Mensaje si la conexión es exitosa

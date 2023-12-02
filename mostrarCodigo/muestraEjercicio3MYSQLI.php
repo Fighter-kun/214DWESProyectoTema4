@@ -34,7 +34,7 @@
                  * @since 20/11/2023
                  */
                 //Muestra el codigo del archivo de la ruta especificada.
-                highlight_file('../codigoPHP/ejercicio3MYSQLLI.php');
+                highlight_file('../codigoPHP/ejercicio3MYSQLI.php');
             ?>
         </div>
     </main>
@@ -48,7 +48,7 @@
                 <a href="../indexProyectoTema4.html" style="color: white; text-decoration: none;"> Inicio</a>
             </div>
             <div class="footer-item">
-                <a href="https://github.com/Fighter-kun?tab=repositories" target="_blank"><img
+                <a href="https://github.com/Fighter-kun/214DWESProyectoTema4.git" target="_blank"><img
                         src="../webroot/media/images/github.png" alt="LogoGitHub" /></a>
             </div>
         </div>

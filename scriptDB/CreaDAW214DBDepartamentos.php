@@ -17,13 +17,15 @@ try {
     $conn = new PDO(DSN, USERNAME, PASSWORD);
     
     // Creamos la tabla T02_Departamento
-    $consulta = "CREATE TABLE IF NOT EXISTS dbs12302455.T02_Departamento (
+    $consulta = <<<CONSULTA
+            CREATE TABLE IF NOT EXISTS dbs12302455.T02_Departamento (
         T02_CodDepartamento CHAR(3) PRIMARY KEY,
         T02_DescDepartamento VARCHAR(255),
         T02_FechaCreacionDepartamento DATETIME,
         T02_VolumenDeNegocio FLOAT,
         T02_FechaBajaDepartamento DATETIME
-    )ENGINE=INNODB;";
+    )ENGINE=INNODB
+        CONSULTA;
     $consultaPreparada = $conn->prepare($consulta);
     $consultaPreparada->execute();
 

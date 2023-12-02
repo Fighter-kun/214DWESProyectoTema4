@@ -1,0 +1,23 @@
+[
+    {
+        "codDepartamento": "AAA",
+        "descDepartamento": "Departamento de Ventas",
+        "fechaCreacionDepartamento": "2023-11-13 13:06:00",
+        "volumenNegocio": 100000,
+        "fechaBajaDepartamento": null
+    },
+    {
+        "codDepartamento": "AAB",
+        "descDepartamento": "Departamento de Marketing",
+        "fechaCreacionDepartamento": "2023-11-13 13:06:00",
+        "volumenNegocio": 50089.5,
+        "fechaBajaDepartamento": null
+    },
+    {
+        "codDepartamento": "AAC",
+        "descDepartamento": "Departamento de Finanzas",
+        "fechaCreacionDepartamento": "2022-11-13 13:06:00",
+        "volumenNegocio": 600.5,
+        "fechaBajaDepartamento": "2023-11-13 13:06:00"
+    }
+]

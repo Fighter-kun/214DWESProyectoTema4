@@ -35,7 +35,7 @@
                      * @version 1.1 
                      * @since 03/11/2023
                      */
-                    require_once '../config/confDB.php';
+                    require_once '../config/confDBPDO.php';
                     // La variable $attributes almacena los artibutos que se pueden mostrar de una base de datos
                     // No se incluyen "PERSISTENT", "PREFETCH" y "TIMEOUT" 
                     $attributesPDO = ["AUTOCOMMIT", 
