@@ -24,7 +24,7 @@ try {
         T02_FechaCreacionDepartamento DATETIME,
         T02_VolumenDeNegocio FLOAT,
         T02_FechaBajaDepartamento DATETIME
-    )ENGINE=INNODB
+    )ENGINE=INNODB;
         CONSULTA;
     $consultaPreparada = $conn->prepare($consulta);
     $consultaPreparada->execute();
