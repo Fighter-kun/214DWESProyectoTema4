@@ -36,7 +36,7 @@
                      * @since 03/11/2023
                      */
                     // Incluyo el fichero que guarda la cofiguración de la conexión por MySQLLi
-                    require_once '../config/confDB_MySQLLi.php';
+                    require_once '../config/confDBMySQLi.php';
 
                     try {
                         $mysqli = new mysqli(DSN, USERNAME, PASSWORD, DBNAME);
@@ -54,7 +54,7 @@
                     <h2>CONEXION FALLIDA POR MEDIO DE MYSQLLI:</h2>
                     <?php
                     // Incluyo el fichero que guarda la cofiguración de la conexión por MySQLLi
-                    require_once '../config/confDB_MySQLLi.php';
+                    require_once '../config/confDBMySQLi.php';
 
                     try {
                         $mysqli = new mysqli(DSN, USERNAME, 'PASSWORD', DBNAME);

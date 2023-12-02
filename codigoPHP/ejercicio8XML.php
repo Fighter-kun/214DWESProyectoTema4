@@ -32,8 +32,8 @@
                         /**
                          * @author Alvaro Cordero Miñambres 
                          * Adaptado por @author Carlos García Cachón
-                         * @version 1.1
-                         * @since 20/11/2023
+                         * @version 1.2
+                         * @since 02/12/2023
                          * 
                          * @Annotation Exportando archivos en formato .xml
                          */
@@ -58,7 +58,7 @@
                         error_reporting(E_ALL);
 
                         // Incluyo la configuración de conexión a la BD
-                        require_once '../config/confDB.php';
+                        require_once '../config/confDBPDO.php';
 
                         // Declaro una variable de entrada para mostrar o no la tabla con los valores de la BD
                         $entradaOK = true;
@@ -151,10 +151,18 @@
                              * Guardamos el archivo en la ruta indicada
                              * save() -> Copia el árbol XML interno a un archivo
                              */
-                            $archivoXML->save('../tmp/departamentos.xml');
 
-                            //Mediante echo mostramos el numero de bytes escritos
-                            echo ("<br><div style=' color: green';>Exportado correctamente</div>");
+                            // Verifica si el directorio existe, si no, créalo
+                            if (!file_exists("../tmp/")) {
+                                mkdir("../tmp/", 0777, true);
+                            }
+
+                            // Intenta escribir en el archivo
+                            if ($archivoXML->save('../tmp/departamentos.xml') !== false) {
+                                echo "<br><span style='color: green'>Exportado correctamente</span>";
+                            } else {
+                                echo "<br><span style='color: red'>Error al exportar el archivo</span>";
+                            }
 
                             //Controlamos las excepciones mediante la clase PDOException
                         } catch (PDOException $miExcepcionPDO) {

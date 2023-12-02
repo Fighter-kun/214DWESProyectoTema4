@@ -41,7 +41,7 @@
                          * @since 20/11/2023
                          */
                         // Incluyo la configuración de conexión a la BD
-                        require_once '../config/confDB.php';
+                        require_once '../config/confDBPDO.php';
 
                         /*                         * Funciones para tener un mayor control sobre nuestros errores
                          *

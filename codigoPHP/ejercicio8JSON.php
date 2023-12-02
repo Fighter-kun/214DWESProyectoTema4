@@ -32,11 +32,11 @@
                         /**
                          * @author Alvaro Cordero Miñambres 
                          * Adaptado por @author Carlos García Cachón
-                         * @version 1.0
-                         * @since 16/11/2023
+                         * @version 1.1
+                         * @since 02/12/2023
                          */
                         // Incluyo la configuración de conexión a la BD
-                        require_once '../config/confDB.php';
+                        require_once '../config/confDBPDO.php';
 
                         /*                         * Funciones para tener un mayor control sobre nuestros errores
                          *
@@ -57,7 +57,7 @@
                         error_reporting(E_ALL);
 
                         // Incluyo la configuración de conexión a la BD
-                        require_once '../config/confDB.php';
+                        require_once '../config/confDBPDO.php';
 
                         // Declaro una variable de entrada para mostrar o no la tabla con los valores de la BD
                         $entradaOK = true;
@@ -137,11 +137,20 @@
                              * Pasandole como parametros la ruta donde queresmos que se guarde y el que queremos sobrescribir
                              * JSON_UNESCAPED_UNICODE: Codifica caracteres Unicode multibyte literalmente
                              */
-                            file_put_contents("../tmp/departamentos.json", $json);
+                            // Ruta del archivo JSON
+                            $rutaArchivoJSON = "../tmp/departamentos.json";
 
-                            //Mediante echo mostramos el numero de bytes escritos
-                            echo ("<br><span style='color: green'>Exportado correctamente</span>");
+                            // Verifica si el directorio existe, si no, créalo
+                            if (!file_exists("../tmp/")) {
+                                mkdir("../tmp/", 0777, true);
+                            }
 
+                            // Intenta escribir en el archivo
+                            if (file_put_contents($rutaArchivoJSON, $json) !== false) {
+                                echo "<br><span style='color: green'>Exportado correctamente</span>";
+                            } else {
+                                echo "<br><span style='color: red'>Error al exportar el archivo</span>";
+                            }
                             //Controlamos las excepciones mediante la clase PDOException
                         } catch (PDOException $miExcepcionPDO) {
                             /**

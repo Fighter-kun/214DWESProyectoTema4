@@ -38,7 +38,7 @@
                      */
                     // Utilizamos el bloque 'try'
                     try {
-                        require_once '../config/confDB.php';
+                        require_once '../config/confDBPDO.php';
                         // Establecemos la conexión por medio de PDO
                         $miDB = new PDO(DSN,USERNAME,PASSWORD);
                         echo ("CONEXIÓN EXITOSA POR PDO<br><br>"); // Mensaje si la conexión es exitosa

@@ -35,7 +35,7 @@
                          * @since 15/11/2023
                          */
                         // Incluyo la configuración de conexión a la BD
-                        require_once '../config/confDB_MySQLLi.php';
+                        require_once '../config/confDBMySQLi.php';
 
                         // Defino una constante para la fecha y hora actual
                         define('FECHA_ACTUAL', date('Y-m-d H:i:s'));

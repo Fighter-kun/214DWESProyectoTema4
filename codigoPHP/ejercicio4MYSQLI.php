@@ -59,7 +59,7 @@
                         //Incluyo las librerias de validación para comprobar los campos
                         require_once '../core/231018libreriaValidacion.php';
                         // Incluyo la configuración de conexión a la BD
-                        require_once '../config/confDB_MySQLLi.php';
+                        require_once '../config/confDBMySQLi.php';
 
                         //Declaración de constantes por OBLIGATORIEDAD
                         define('OPCIONAL', 0);
@@ -96,21 +96,14 @@
                         } else {
                             $entradaOK = false; //Si no ha pulsado el botón de enviar la validación es incorrecta.
                         }
-                        
-                        //Si la entrada es Ok almacenamos el valor de la respuesta del usuario en el array $aRespuestas
-                        if ($entradaOK) {
-                            //Almacenamos el valor en el array
-                            $aRespuestas = [
-                                'DescDepartamento' => $_REQUEST['DescDepartamento'],
-                            ];
-
+                        try {
                             // Establecimiento de la conexión
                             $mysqli = new mysqli(DSN, USERNAME, PASSWORD, DBNAME);
 
                             // Preparamos la consulta
                             $resultadoConsulta = $mysqli->query("SELECT * FROM T02_Departamento WHERE T02_DescDepartamento LIKE '%" . $aRespuestas['DescDepartamento'] . "%';");
 
-                            try {
+                            
                                 // Ejecutando la declaración SQL
                                 if ($resultadoConsulta !== false && $resultadoConsulta->num_rows == 0) {
                                     $aErrores['DescDepartamento'] = "No existen departamentos con esa descripción";
@@ -161,7 +154,6 @@
                                     $mysqli->close();
                                 }
                             }
-                        } //Despues de que se ejecute el codigo anterior mostramos pase lo que pase el formulario
                         ?>
 
                         <form name="insercionValoresTablaDepartamento" action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">

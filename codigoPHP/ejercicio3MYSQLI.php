@@ -50,7 +50,7 @@
                         // Incluyo la libreria de validación para comprobar los campos
                         require_once '../core/231018libreriaValidacion.php';
                         // Incluyo el fichero que guarda la cofiguración de la conexión por MySQLLi
-                        require_once '../config/confDB_MySQLLi.php';
+                        require_once '../config/confDBMySQLi.php';
 
                         // Declaración de constantes por OBLIGATORIEDAD
                         define('OPCIONAL', 0);

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Departamentos>
+  <Departamento>
+    <CodDepartamento>AAA</CodDepartamento>
+    <DescDepartamento>Departamento de Ventas</DescDepartamento>
+    <FechaCreacionDepartamento>2023-11-13 13:06:00</FechaCreacionDepartamento>
+    <VolumenDeNegocio>100000</VolumenDeNegocio>
+    <FechaBajaDepartamento/>
+  </Departamento>
+  <Departamento>
+    <CodDepartamento>AAB</CodDepartamento>
+    <DescDepartamento>Departamento de Marketing</DescDepartamento>
+    <FechaCreacionDepartamento>2023-11-13 13:06:00</FechaCreacionDepartamento>
+    <VolumenDeNegocio>50089.5</VolumenDeNegocio>
+    <FechaBajaDepartamento/>
+  </Departamento>
+  <Departamento>
+    <CodDepartamento>AAC</CodDepartamento>
+    <DescDepartamento>Departamento de Finanzas</DescDepartamento>
+    <FechaCreacionDepartamento>2022-11-13 13:06:00</FechaCreacionDepartamento>
+    <VolumenDeNegocio>600.5</VolumenDeNegocio>
+    <FechaBajaDepartamento/>
+  </Departamento>
+  <Departamento>
+    <CodDepartamento>AAD</CodDepartamento>
+    <DescDepartamento>Departamento de Cobro</DescDepartamento>
+    <FechaCreacionDepartamento>2023-11-20 19:57:24</FechaCreacionDepartamento>
+    <VolumenDeNegocio>300</VolumenDeNegocio>
+    <FechaBajaDepartamento/>
+  </Departamento>
+  <Departamento>
+    <CodDepartamento>AAE</CodDepartamento>
+    <DescDepartamento>Departamento de I+D</DescDepartamento>
+    <FechaCreacionDepartamento>2023-11-20 19:57:24</FechaCreacionDepartamento>
+    <VolumenDeNegocio>10000</VolumenDeNegocio>
+    <FechaBajaDepartamento/>
+  </Departamento>
+  <Departamento>
+    <CodDepartamento>AAG</CodDepartamento>
+    <DescDepartamento>Departamento de Montaje</DescDepartamento>
+    <FechaCreacionDepartamento>2023-11-20 20:16:38</FechaCreacionDepartamento>
+    <VolumenDeNegocio>50</VolumenDeNegocio>
+    <FechaBajaDepartamento/>
+  </Departamento>
+  <Departamento>
+    <CodDepartamento>AAH</CodDepartamento>
+    <DescDepartamento>Departamento de Desmontaje</DescDepartamento>
+    <FechaCreacionDepartamento>2023-11-20 20:16:38</FechaCreacionDepartamento>
+    <VolumenDeNegocio>700</VolumenDeNegocio>
+    <FechaBajaDepartamento/>
+  </Departamento>
+</Departamentos>

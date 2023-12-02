@@ -18,8 +18,7 @@ try {
 
     // Eliminamos la tabla T02_Departamento
     $consulta = <<<CONSULTA
-            USE dbs12302455;
-            DROP TABLE  T02_Departamento
+            DROP TABLE  dbs12302455.T02_Departamento
             CONSULTA;
     $consultaPreparada = $conn->prepare($consulta);
     $consultaPreparada->execute();
