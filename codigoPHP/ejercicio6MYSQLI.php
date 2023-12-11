@@ -60,7 +60,7 @@
 
                             foreach ($aDepartamentosNuevos as $departamento) {
                                 // Consulta SQL de inserción 
-                                $consultaInsercion = "INSERT INTO T02_Departamento (T02_CodDepartamento, T02_DescDepartamento, T02_FechaCreacionDepartamento, T02_VolumenDeNegocio, T02_FechaBajaDepartamento) "
+                                $consultaInsercion = "INSERT IGNORE INTO T02_Departamento (T02_CodDepartamento, T02_DescDepartamento, T02_FechaCreacionDepartamento, T02_VolumenDeNegocio, T02_FechaBajaDepartamento) "
                                         . "VALUES (?, ?, ?, ?, ?)";
 
                                 // Preparar la consulta

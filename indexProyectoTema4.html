@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <!--
-        Descripción: 214DWESProyectoTema3
+        Descripción: 214DWESProyectoTema4
         Autor: Carlos García Cachón
         Fecha de creación/modificación: 13/10/2023
 -->
@@ -19,30 +19,9 @@
               integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
         <link rel="stylesheet" href="webroot/css/style.css">
         <style>
-            .parpadeante {
-                animation: parpadeo 5s infinite;
-                background-color: red;
-                color: white;
-                transform-origin: top right;
-                transform: rotate(15deg);
-                margin-left: 125px;
-                top: 325px;
-            }
             svg {
-                width: 20px;
-                margin-right:5px;
-                fill: white;
-            }
-
-            @keyframes parpadeo {
-                0%, 100% {
-                    transform: scale(0.40) rotate(15deg);
-                    font-size: 20px;
-                }
-                50% {
-                    transform: scale(0.50) rotate(15deg);
-                    font-size: 25px;
-                }
+                width: 30px;
+                fill: red;
             }
         </style>
     </head>
@@ -89,14 +68,7 @@
                                         <th>Scripts - SQL</th>
                                         <th></th>
                                         <th>Código - Desarrollo</th>
-                                        <th><div class="alert alert-danger d-flex align-items-center z-3 position-absolute parpadeante" role="alert">
-                                                <svg xmlns="http://www.w3.org/2000/svg" class="bi bi-exclamation-triangle-fill flex-shrink-0 me-2" viewBox="0 0 16 16" role="img" aria-label="Warning:">
-                                                <path d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
-                                                </svg>No tocar
-                                            </div>
-                                            Ejecutar - Explotación
-
-                                        </th>
+                                        <th>Ejecutar - Explotación</th>
                                         <th>Código - Explotación</th>
                                     </tr>
                                 </thead>
@@ -105,21 +77,27 @@
                                         <td>Script creación de base de datos y usuario:</td>
                                         <td></td>
                                         <td><a href="mostrarCodigo/muestraScriptDBCrea.html"><img src="webroot/media/images/icon-eye.png" alt="Icon-Eye"/></a></td>
-                                        <td><a href="scriptDB/CreaDAW214DBDepartamentos.php"><img src="webroot/media/images/icon-play.png" alt="Icon-Play"/></a></td>
+                                        <td><a href="scriptDB/CreaDAW214DBDepartamentos.php"><svg xmlns="http://www.w3.org/2000/svg" class="bi bi-exclamation-triangle-fill flex-shrink-0 me-2" viewBox="0 0 16 16" role="img" aria-label="Warning:">
+                                                <path d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
+                                                </svg></a></td>
                                         <td><a href="mostrarCodigo/muestraScriptDBCrea.php"><img src="webroot/media/images/icon-eye.png" alt="Icon-Eye"/></a></td>
                                     </tr>
                                     <tr>
                                         <td>Script carga inicial de base de datos:</td>
                                         <td></td>
                                         <td><a href="mostrarCodigo/muestraScriptDBCargaInicial.html"><img src="webroot/media/images/icon-eye.png" alt="Icon-Eye"/></a></td>
-                                        <td><a href="scriptDB/CargaInicialDAW214DBDepartamentos.php"><img src="webroot/media/images/icon-play.png" alt="Icon-Play"/></a></td>
+                                        <td><a href="scriptDB/CargaInicialDAW214DBDepartamentos.php"><svg xmlns="http://www.w3.org/2000/svg" class="bi bi-exclamation-triangle-fill flex-shrink-0 me-2" viewBox="0 0 16 16" role="img" aria-label="Warning:">
+                                                <path d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
+                                                </svg></a></td>
                                         <td><a href="mostrarCodigo/muestraScriptDBCargaInicial.php"><img src="webroot/media/images/icon-eye.png" alt="Icon-Eye"/></a></td>
                                     </tr>
                                     <tr>
                                         <td>Script borrado de base de datos y usuario:</td>
                                         <td></td>
                                         <td><a href="mostrarCodigo/muestraScriptDBBorra.html"><img src="webroot/media/images/icon-eye.png" alt="Icon-Eye"/></a></td>
-                                        <td><a href="scriptDB/BorraDAW214DBDepartamentos.php"><img src="webroot/media/images/icon-play.png" alt="Icon-Play"/></a></td>
+                                        <td><a href="scriptDB/BorraDAW214DBDepartamentos.php"><svg xmlns="http://www.w3.org/2000/svg" class="bi bi-exclamation-triangle-fill flex-shrink-0 me-2" viewBox="0 0 16 16" role="img" aria-label="Warning:">
+                                                <path d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
+                                                </svg></a></td>
                                         <td><a href="mostrarCodigo/muestraScriptDBBorra.php"><img src="webroot/media/images/icon-eye.png" alt="Icon-Eye"/></a></td>
                                     </tr>
                                 </tbody>

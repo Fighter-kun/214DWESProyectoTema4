@@ -55,11 +55,9 @@
                          * @version 1.1
                          * @since 15/11/2023
                          */
-                        // Incluyo la libreria de validación para comprobar los campos
-                        require_once '../core/231018libreriaValidacion.php';
                         // Incluyo la configuración de conexión a la BD
                         require_once '../config/confDBPDO.php';
-                        
+
                         // Defino una constante para la fecha y hora actual
                         define('FECHA_ACTUAL', date('Y-m-d H:i:s'));
 
@@ -68,42 +66,50 @@
                             // Establecemos la conexión por medio de PDO
                             $miDB = new PDO(DSN, USERNAME, PASSWORD);
                             echo ("<div class='respuestaCorrecta'>CONEXIÓN EXITOSA POR PDO</div><br><br>"); // Mensaje si la conexión es exitosa
-
                             // CONSULTAS Y TRANSACCION
                             $miDB->beginTransaction(); // Deshabilitamos el modo autocommit
-
                             // Consultas SQL de inserción 
-                            $consultaInsercion = "INSERT T02_Departamento(T02_CodDepartamento, T02_DescDepartamento, T02_FechaCreacionDepartamento, T02_VolumenDeNegocio, T02_FechaBajaDepartamento) "
+                            $consultaInsercion = "INSERT IGNORE INTO T02_Departamento(T02_CodDepartamento, T02_DescDepartamento, T02_FechaCreacionDepartamento, T02_VolumenDeNegocio, T02_FechaBajaDepartamento) "
                                     . "VALUES (:CodDepartamento, :DescDepartamento, :FechaCreacionDepartamento, :VolumenDeNegocio, :FechaBajaDepartamento)";
 
                             // Preparamos las consultas
                             $resultadoconsultaInsercion = $miDB->prepare($consultaInsercion);
-                            
+
                             // ARRAY CON REGISTROS
-                            $aDepartamentosNuevos  = [
-                                ['CodDepartamento' => 'AAG','DescDepartamento' => 'Departamento de Montaje', 'FechaCreacionDepartamento' => FECHA_ACTUAL, 'VolumenDeNegocio' => 50, 'FechaBajaDepartamento' => null],
-                                ['CodDepartamento' => 'AAH','DescDepartamento' => 'Departamento de Desmontaje', 'FechaCreacionDepartamento' => FECHA_ACTUAL, 'VolumenDeNegocio' => 700, 'FechaBajaDepartamento' => null]
+                            $aDepartamentosNuevos = [
+                                ['CodDepartamento' => 'AAG', 'DescDepartamento' => 'Departamento de Montaje', 'FechaCreacionDepartamento' => FECHA_ACTUAL, 'VolumenDeNegocio' => 50, 'FechaBajaDepartamento' => null],
+                                ['CodDepartamento' => 'AAH', 'DescDepartamento' => 'Departamento de Desmontaje', 'FechaCreacionDepartamento' => FECHA_ACTUAL, 'VolumenDeNegocio' => 700, 'FechaBajaDepartamento' => null]
+                            ];
+
+                            foreach ($aDepartamentosNuevos as $departamento) {
+                                $aResgistros[] = [
+                                    ':CodDepartamento' => $departamento['CodDepartamento'],
+                                    ':DescDepartamento' => $departamento['DescDepartamento'],
+                                    ':FechaCreacionDepartamento' => $departamento['FechaCreacionDepartamento'],
+                                    ':VolumenDeNegocio' => $departamento['VolumenDeNegocio'],
+                                    ':FechaBajaDepartamento' => $departamento['FechaBajaDepartamento']
                                 ];
-                            
-                            foreach($aDepartamentosNuevos as $departamento){ //Recorremos los registros que vamos a insertar en la tabla
-                                $aResgistros = [':CodDepartamento' => $departamento['CodDepartamento'], 
-                                               ':DescDepartamento' => $departamento['DescDepartamento'], 
-                                               ':FechaCreacionDepartamento' => $departamento['FechaCreacionDepartamento'],
-                                               ':VolumenDeNegocio' => $departamento['VolumenDeNegocio'],
-                                               ':FechaBajaDepartamento' => $departamento['FechaBajaDepartamento']];
+                            }
+
+                            // Luego, fuera del bucle, prepara la consulta y ejecútala
+                            $resultadoconsultaInsercion = $miDB->prepare($consultaInsercion);
+
+                            // Ahora puedes ejecutar la consulta dentro del bucle
+                            foreach ($aResgistros as $registro) {
+                                $resultadoconsultaInsercion->execute($registro);
                             }
 
                             $miDB->commit(); // Confirma los cambios y los consolida
-                                echo ("<div class='respuestaCorrecta'>Los datos se han insertado correctamente en la tabla Departamento.</div>");
+                            echo ("<div class='respuestaCorrecta'>Los datos se han insertado correctamente en la tabla Departamento.</div>");
 
-                                // Preparamos y ejecutamos la consulta SQL
-                                $consulta = "SELECT * FROM T02_Departamento";
-                                $resultadoConsultaPreparada = $miDB->prepare($consulta);
-                                $resultadoConsultaPreparada->execute();
+                            // Preparamos y ejecutamos la consulta SQL
+                            $consulta = "SELECT * FROM T02_Departamento";
+                            $resultadoConsultaPreparada = $miDB->prepare($consulta);
+                            $resultadoConsultaPreparada->execute();
 
-                                // Creamos una tabla en la que mostraremos la tabla de la BD
-                                echo ("<div class='list-group text-center'>");
-                                echo ("<table>
+                            // Creamos una tabla en la que mostraremos la tabla de la BD
+                            echo ("<div class='list-group text-center'>");
+                            echo ("<table>
                                     <thead>
                                     <tr>
                                         <th>Codigo de Departamento</th>
@@ -114,30 +120,30 @@
                                     </tr>
                                     </thead>");
 
-                                /* Aqui recorremos todos los valores de la tabla, columna por columna, usando el parametro 'PDO::FETCH_ASSOC' , 
-                                 * el cual nos indica que los resultados deben ser devueltos como un array asociativo, donde los nombres de las columnas de 
-                                 * la tabla se utilizan como claves (keys) en el array.
-                                 */
-                                echo ("<tbody>");
-                                while ($oDepartamento = $resultadoConsultaPreparada->fetchObject()) {
-                                    echo ("<tr>");
-                                    echo ("<td>".$oDepartamento->T02_CodDepartamento."</td>");
-                                    echo ("<td>".$oDepartamento->T02_DescDepartamento."</td>");
-                                     echo ("<td>".$oDepartamento->T02_FechaCreacionDepartamento."</td>");
-                                      echo ("<td>".$oDepartamento->T02_VolumenDeNegocio."</td>");
-                                      echo ("<td>".$oDepartamento->T02_FechaBajaDepartamento."</td>");
-                                    echo ("</tr>");
-                                }
+                            /* Aqui recorremos todos los valores de la tabla, columna por columna, usando el parametro 'PDO::FETCH_ASSOC' , 
+                             * el cual nos indica que los resultados deben ser devueltos como un array asociativo, donde los nombres de las columnas de 
+                             * la tabla se utilizan como claves (keys) en el array.
+                             */
+                            echo ("<tbody>");
+                            while ($oDepartamento = $resultadoConsultaPreparada->fetchObject()) {
+                                echo ("<tr>");
+                                echo ("<td>" . $oDepartamento->T02_CodDepartamento . "</td>");
+                                echo ("<td>" . $oDepartamento->T02_DescDepartamento . "</td>");
+                                echo ("<td>" . $oDepartamento->T02_FechaCreacionDepartamento . "</td>");
+                                echo ("<td>" . $oDepartamento->T02_VolumenDeNegocio . "</td>");
+                                echo ("<td>" . $oDepartamento->T02_FechaBajaDepartamento . "</td>");
+                                echo ("</tr>");
+                            }
 
-                                echo ("</tbody>");
-                                /* Ahora usamos la función 'rowCount()' que nos devuelve el número de filas afectadas por la consulta y 
-                                 * almacenamos el valor en la variable '$numeroDeRegistros'
-                                 */
-                                $numeroDeRegistrosConsultaPreparada = $resultadoConsultaPreparada->rowCount();
-                                // Y mostramos el número de registros
-                                echo ("<tfoot ><tr style='background-color: #666; color:white;'><td colspan='5'>Número de registros en la tabla Departamento: ".$numeroDeRegistrosConsultaPreparada.'</td></tr></tfoot>');
-                                echo ("</table>");
-                                echo ("</div>");
+                            echo ("</tbody>");
+                            /* Ahora usamos la función 'rowCount()' que nos devuelve el número de filas afectadas por la consulta y 
+                             * almacenamos el valor en la variable '$numeroDeRegistros'
+                             */
+                            $numeroDeRegistrosConsultaPreparada = $resultadoConsultaPreparada->rowCount();
+                            // Y mostramos el número de registros
+                            echo ("<tfoot ><tr style='background-color: #666; color:white;'><td colspan='5'>Número de registros en la tabla Departamento: " . $numeroDeRegistrosConsultaPreparada . '</td></tr></tfoot>');
+                            echo ("</table>");
+                            echo ("</div>");
                         } catch (PDOException $miExcepcionPDO) {
                             $miDB->rollback(); //  Revierte o deshace los cambios
                             $errorExcepcion = $miExcepcionPDO->getCode(); // Almacenamos el código del error de la excepción en la variable '$errorExcepcion'

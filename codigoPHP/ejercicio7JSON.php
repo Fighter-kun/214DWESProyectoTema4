@@ -102,7 +102,7 @@
                             $miDB->beginTransaction(); // Deshabilitamos el modo autocommit
 
                             // Consultas SQL de inserción 
-                            $consultaInsercion = "INSERT T02_Departamento(T02_CodDepartamento, T02_DescDepartamento, T02_FechaCreacionDepartamento, T02_VolumenDeNegocio, T02_FechaBajaDepartamento) "
+                            $consultaInsercion = "INSERT IGNORE INTO T02_Departamento(T02_CodDepartamento, T02_DescDepartamento, T02_FechaCreacionDepartamento, T02_VolumenDeNegocio, T02_FechaBajaDepartamento) "
                                     . "VALUES (:CodDepartamento, :DescDepartamento, :FechaCreacionDepartamento, :VolumenDeNegocio, :FechaBajaDepartamento)";
 
                             // Preparamos las consultas
