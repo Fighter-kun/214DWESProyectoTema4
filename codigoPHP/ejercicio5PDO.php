@@ -52,11 +52,9 @@
                         <?php
                         /**
                          * @author Carlos García Cachón
-                         * @version 1.1
+                         * @version 1.2
                          * @since 15/11/2023
                          */
-                        // Incluyo la libreria de validación para comprobar los campos
-                        require_once '../core/231018libreriaValidacion.php';
                         // Incluyo la configuración de conexión a la BD
                         require_once '../config/confDBPDO.php';
 
@@ -68,9 +66,9 @@
                             // CONSULTAS Y TRANSACCION
                             $miDB->beginTransaction(); // Deshabilitamos el modo autocommit
                             // Consultas SQL de inserción 
-                            $consultaInsercion1 = "INSERT INTO T02_Departamento(T02_CodDepartamento, T02_DescDepartamento, T02_FechaCreacionDepartamento, T02_VolumenDeNegocio, T02_FechaBajaDepartamento) VALUES ('AAD', 'Departamento de Cobro', now(), 300, NULL)";
-                            $consultaInsercion2 = "INSERT INTO T02_Departamento(T02_CodDepartamento, T02_DescDepartamento, T02_FechaCreacionDepartamento, T02_VolumenDeNegocio, T02_FechaBajaDepartamento) VALUES ('AAE', 'Departamento de I+D', now(), 10000, NULL)";
-                            $consultaInsercion3 = "INSERT INTO T02_Departamento(T02_CodDepartamento, T02_DescDepartamento, T02_FechaCreacionDepartamento, T02_VolumenDeNegocio, T02_FechaBajaDepartamento) VALUES ('AAF', 'Departamento de Inmuebles', now(), 30, NULL)";
+                            $consultaInsercion1 = "INSERT IGNORE INTO T02_Departamento(T02_CodDepartamento, T02_DescDepartamento, T02_FechaCreacionDepartamento, T02_VolumenDeNegocio, T02_FechaBajaDepartamento) VALUES ('AAD', 'Departamento de Cobro', now(), 300, NULL)";
+                            $consultaInsercion2 = "INSERT IGNORE INTO T02_Departamento(T02_CodDepartamento, T02_DescDepartamento, T02_FechaCreacionDepartamento, T02_VolumenDeNegocio, T02_FechaBajaDepartamento) VALUES ('AAE', 'Departamento de I+D', now(), 10000, NULL)";
+                            $consultaInsercion3 = "INSERT IGNORE INTO T02_Departamento(T02_CodDepartamento, T02_DescDepartamento, T02_FechaCreacionDepartamento, T02_VolumenDeNegocio, T02_FechaBajaDepartamento) VALUES ('AAF', 'Departamento de Inmuebles', now(), 30, NULL)";
 
                             // Preparamos las consultas
                             $resultadoconsultaInsercion1 = $miDB->prepare($consultaInsercion1);

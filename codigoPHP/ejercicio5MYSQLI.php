@@ -51,9 +51,9 @@
                             // CONSULTAS Y TRANSACCION
                             $mysqli->autocommit(false); // Deshabilitamos el modo autocommit
                             // Consultas SQL de inserción 
-                            $consultaInsercion1 = "INSERT INTO T02_Departamento(T02_CodDepartamento, T02_DescDepartamento, T02_FechaCreacionDepartamento, T02_VolumenDeNegocio, T02_FechaBajaDepartamento) VALUES ('AAD', 'Departamento de Cobro', now(), 300, NULL)";
-                            $consultaInsercion2 = "INSERT INTO T02_Departamento(T02_CodDepartamento, T02_DescDepartamento, T02_FechaCreacionDepartamento, T02_VolumenDeNegocio, T02_FechaBajaDepartamento) VALUES ('AAE', 'Departamento de I+D', now(), 10000, NULL)";
-                            $consultaInsercion3 = "INSERT INTO T02_Departamento(T02_CodDepartamento, T02_DescDepartamento, T02_FechaCreacionDepartamento, T02_VolumenDeNegocio, T02_FechaBajaDepartamento) VALUES ('AAF', 'Departamento de Inmuebles', now(), 30, NULL)";
+                            $consultaInsercion1 = "INSERT IGNORE INTO T02_Departamento(T02_CodDepartamento, T02_DescDepartamento, T02_FechaCreacionDepartamento, T02_VolumenDeNegocio, T02_FechaBajaDepartamento) VALUES ('AAD', 'Departamento de Cobro', now(), 300, NULL)";
+                            $consultaInsercion2 = "INSERT IGNORE INTO T02_Departamento(T02_CodDepartamento, T02_DescDepartamento, T02_FechaCreacionDepartamento, T02_VolumenDeNegocio, T02_FechaBajaDepartamento) VALUES ('AAE', 'Departamento de I+D', now(), 10000, NULL)";
+                            $consultaInsercion3 = "INSERT IGNORE INTO T02_Departamento(T02_CodDepartamento, T02_DescDepartamento, T02_FechaCreacionDepartamento, T02_VolumenDeNegocio, T02_FechaBajaDepartamento) VALUES ('AAF', 'Departamento de Inmuebles', now(), 30, NULL)";
 
                             // Preparamos las consultas
                             $resultadoconsultaInsercion1 = $mysqli->prepare($consultaInsercion1);
